@@ -160,6 +160,10 @@ void Nivel::imprimir(){
     pl->imprimir();
 }
 
+int** Nivel::getMatriz(){
+    return pl->getMatriz();
+}
+
 int Nivel::getNivel(){
     return n;
 }

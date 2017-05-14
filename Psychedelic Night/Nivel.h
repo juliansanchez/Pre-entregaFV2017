@@ -42,6 +42,7 @@ public:
     void setY(int y);
     void actualizar(sf::Clock cl, sf::Time tim);
     void colisionBalasEnemigo();
+    int** getMatriz();
 private:
     int n; //Nivel
     string semilla;

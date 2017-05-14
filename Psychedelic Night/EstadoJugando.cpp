@@ -33,6 +33,7 @@ void EstadoJugando::Init(){
     printf("EstadoJugando iniciado\n");
     relojSprite.restart();
     timeStartUpdate =clock1.getElapsedTime();
+    minimap = false;
 }
 
 void EstadoJugando::Limpiar(){
@@ -72,6 +73,7 @@ void EstadoJugando::ManejarEventos(MotorJuego* juego){
                     case sf::Keyboard::Down: personaje->setDirDisparo(1); break;
                     case sf::Keyboard::Left: personaje->setDirDisparo(2); break;
                     case sf::Keyboard::Right: personaje->setDirDisparo(3); break;
+                    case sf::Keyboard::Z: if (!minimap) minimap = true; else minimap = false; break;
                 }           
             }
             if (event.type == sf::Event::KeyReleased){
@@ -135,7 +137,10 @@ void EstadoJugando::Dibujar(MotorJuego* juego){
     hud->dibujar();
     Minimapa* minimapa = Minimapa::Instance();
     juego->ventana->setView(minimapa->getMinimapa());
-    minimapa->dibujar();
+    if (!minimap)
+        minimapa->dibujar();
+    else
+        minimapa->dibujartotal();
     motor2D->pintarVentana();
 }
 
