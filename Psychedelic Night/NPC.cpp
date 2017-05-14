@@ -22,10 +22,12 @@ NPC::NPC(int tipo, int posX, int posY) {
     this->posMatrix_x= posX;
     this->posMatrix_y=posY;
     contadorvueltas = 0;
+    textura1 = new Texture();
+    vida=4;
     if(tipo==0){
 
-        Texture *textura1;
-        textura1 = new Texture();
+
+        
         if (!textura1->loadFromFile("resources/topo.png")) {
             cerr << "Error cargando la imagen";
             exit(0);
@@ -64,15 +66,14 @@ NPC::NPC(int tipo, int posX, int posY) {
     }
     
     if(tipo==1){
-        Texture *textura2;
-        textura2 = new Texture();
-        if (!textura2->loadFromFile("resources/mosquito.png")) {
+
+        if (!textura1->loadFromFile("resources/mosquito.png")) {
             cerr << "Error cargando la imagen";
             exit(0);
         }
         
-        SpriteGame m(*textura2,7,25,10,19);
-        SpriteGame m2(*textura2,41,53,5,19);
+        SpriteGame m(*textura1,7,25,10,19);
+        SpriteGame m2(*textura1,41,53,5,19);
         this->enemy=new SpriteGame*[2];
 
         this->alto= m.getAlto();
@@ -91,16 +92,15 @@ NPC::NPC(int tipo, int posX, int posY) {
             
                    
     if(tipo==2){
-        Texture *textura3;
-        textura3 = new Texture();
-        if (!textura3->loadFromFile("resources/cabezon.png")) {
+
+        if (!textura1->loadFromFile("resources/cabezon.png")) {
             cerr << "Error cargando la imagen";
             exit(0);
         }
-        SpriteGame c(*textura3,5,75,0,75);
-        SpriteGame c1(*textura3,85,155,0,75);
-        SpriteGame c2(*textura3,165,235,0,75);
-        SpriteGame c3(*textura3,245,315,0,75);
+        SpriteGame c(*textura1,5,75,0,75);
+        SpriteGame c1(*textura1,85,155,0,75);
+        SpriteGame c2(*textura1,165,235,0,75);
+        SpriteGame c3(*textura1,245,315,0,75);
         
         this->enemigo=new Sprite*[4];
         for(int i=0; i<4;i++){
@@ -118,15 +118,13 @@ NPC::NPC(int tipo, int posX, int posY) {
     }
     
     if(tipo==13){
-        Texture *textura13;
-        textura13 = new Texture();
-        if (!textura13->loadFromFile("resources/mosquito2.png")) {
+        if (!textura1->loadFromFile("resources/mosquito2.png")) {
             cerr << "Error cargando la imagen";
             exit(0);
         }
         
-        SpriteGame m(*textura13,7,25,10,19);
-        SpriteGame m2(*textura13,41,53,5,19);
+        SpriteGame m(*textura1,7,25,10,19);
+        SpriteGame m2(*textura1,41,53,5,19);
         this->enemy=new SpriteGame*[2];
 
        
@@ -348,13 +346,40 @@ void NPC::colisionPersonaje(){
             }
         }
     }
-    
-     
-   
-
 }
 
 
+
+void NPC::colisionBalasPersonaje(){
+    
+     EstadoJugando* estandoJugando= EstadoJugando::Instance();
+     
+     
+    for(int i = 0 ; i<balas->size(); i++){
+        if(balas->at(i)){
+            
+            if((estandoJugando->getPersonaje()->getX()+32) > (balas->at(i)->getX())&&  
+                (estandoJugando->getPersonaje()->getY()+42) > (balas->at(i)->getY()) &&
+                (balas->at(i)->getX()+16)> (estandoJugando->getPersonaje()->getX()) &&
+                (balas->at(i)->getY()+16)> (estandoJugando->getPersonaje()->getY())){
+                estandoJugando->getPersonaje()->quitarVida();
+                balas->at(i)->golpea();
+                cout<<estandoJugando->getPersonaje()->getVidaActual()<<endl;
+            }     
+        }
+    }    
+}
+
+
+void NPC::quitarVida(int herida){
+
+    vida=vida-herida;
+}
+
+int NPC::getVida(){
+
+    return vida;
+}
 
 
 int NPC::getX(){
@@ -372,5 +397,13 @@ int NPC::getPosMatrix_x(){
 
 int NPC::getPosMatrix_y(){
     return posMatrix_y;
+}
+
+int NPC::getAnchoSprite(){
+    return ancho;
+}
+
+int NPC::getAltoSprite(){
+    return alto;
 }
 

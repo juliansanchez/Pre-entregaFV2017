@@ -14,7 +14,10 @@
 #ifndef BALA_H
 #define BALA_H
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
+using namespace sf;
+using namespace std;
 class Bala {
 public:
     Bala(int x,int y,int velx, int vely, float rangoDisparo);
@@ -22,21 +25,22 @@ public:
     ~Bala();
     
     void colisionar();
-    void setPosicion(int x, int y);
     void actualiza();
     int getX();
     int getY();
-    bool destruirBala = false;
-    sf::Sprite getSprite();      
+    bool destruirBala;
+    sf::Sprite getSprite(); 
+    void golpea();
 private:    
     int posx;
     int posy;
     int velx;
     int vely;
     float rangoDisparo;
+    bool colisionObjeto;
     
-    sf::Texture textura;
-    sf::Sprite sprite;
+    sf::Texture *textura;
+    sf::Sprite *sprite;
     sf::Clock clock; // controlar vida de la bala
 };
 

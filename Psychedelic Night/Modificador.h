@@ -46,7 +46,7 @@ private:
     float escala;
     
     sf::Sprite *modificador;
-    sf::Texture texture;
+    sf::Texture *texture;
     sf::Rect<float> hitbox;
 
     

@@ -44,7 +44,12 @@ public:
     int getTipo();
     int getPosMatrix_x();
     int getPosMatrix_y();
+    int getAnchoSprite();
+    int getAltoSprite();
     void colisionPersonaje();
+    void colisionBalasPersonaje();
+    void quitarVida(int herida);
+    int getVida();
     
 private:
     int tipo;
@@ -56,6 +61,7 @@ private:
     int cambio_sprite;
     int numCambio;
     int contadorvueltas;
+    Texture *textura1;
     
     float angle;
     int retraso;

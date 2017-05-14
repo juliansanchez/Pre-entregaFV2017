@@ -26,34 +26,53 @@ Bala::Bala(int x,int y,int velx, int vely, float rangoDisparo) {
     
     clock.restart();
     
-    if(!textura.loadFromFile("resources/bala.png")){
+    textura = new Texture();
+    
+    
+    if(!textura->loadFromFile("resources/bala.png")){
         std::cerr << "Error while loading texture ISAAC" << std::endl;
         return;
     };
     
-    sprite = sf::Sprite(textura);
-    sprite.setTextureRect(sf::IntRect(16, 16, 32, 32));
+    sprite = new Sprite(*textura);
+    sprite->setTextureRect(sf::IntRect(16, 16, 32, 32));
     // fijar centroide
-    sprite.setOrigin(16,16); 
-    sprite.setScale(0.5,0.5);
+    sprite->setOrigin(16,16); 
+    sprite->setScale(0.5,0.5);
+    
+    
+    this->colisionObjeto=false;
     
 }
 
 Bala::~Bala() {}
 
-void Bala::setPosicion(int x, int y){     }
-void Bala::colisionar(){       }
+
+void Bala::colisionar(){     
+
+    
+
+}
 
 void Bala::actualiza(){
     posx+=velx;
     posy+=vely;
 
     if(clock.getElapsedTime().asSeconds()< rangoDisparo){
-        sprite.setPosition(posx,posy);  
+        sprite->setPosition(posx,posy);  
     }
-    else
-        destruirBala = true;
+    else{
+        destruirBala = true;}
     
+    if(colisionObjeto==true){
+        destruirBala=true;
+    }
+    
+}
+
+
+void Bala::golpea(){
+    colisionObjeto=true;
 }
 int Bala::getX(){
     return posx;
@@ -65,6 +84,6 @@ int Bala::getY(){
 
 
 sf::Sprite Bala::getSprite(){
-    return sprite;
+    return *sprite;
 }
 

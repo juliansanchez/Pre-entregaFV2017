@@ -171,6 +171,7 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
         if (vectorenemigos->at(i)->getPosMatrix_x() == posx && vectorenemigos->at(i)->getPosMatrix_y() == posy){
             vectorenemigos->at(i)->accionesEnemigo(cl, tim);
             vectorenemigos->at(i)->colisionPersonaje();
+            vectorenemigos->at(i)->colisionBalasPersonaje();
         }
     }
     if (boss->getPosMatrix_x() == posx && boss->getPosMatrix_y() == posy){
@@ -178,6 +179,7 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
     }
     
     tesoro->colisionObjeto(estandoJugando->getPersonaje());
+    this->colisionBalasEnemigo();
 }
 
 /*void Nivel::rellenarHabitaciones(){
@@ -191,6 +193,32 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
         }
     }
 }*/
+
+
+void Nivel::colisionBalasEnemigo(){
+
+  EstadoJugando* estandoJugando= EstadoJugando::Instance();
+
+
+  for(int i = 0 ; i<estandoJugando->getPersonaje()->getMunicion()->size(); i++){
+      for (int j = 0; j<vectorenemigos->size(); j++){
+          if (vectorenemigos->at(j)->getPosMatrix_x() == posx && vectorenemigos->at(j)->getPosMatrix_y() == posy){
+              cout<<"Julian SI ENTRO"<<endl;
+            if((vectorenemigos->at(j)->getX()+vectorenemigos->at(j)->getAnchoSprite()) > (estandoJugando->getPersonaje()->getMunicion()->at(i)->getX())&&  
+                (vectorenemigos->at(j)->getY()+vectorenemigos->at(j)->getAltoSprite()) > (estandoJugando->getPersonaje()->getMunicion()->at(i)->getY())&&
+                (estandoJugando->getPersonaje()->getMunicion()->at(i)->getX()+16)> (vectorenemigos->at(j)->getX()) &&
+                (estandoJugando->getPersonaje()->getMunicion()->at(i)->getY()+16)> (vectorenemigos->at(j)->getY())){
+                
+                    estandoJugando->getPersonaje()->getMunicion()->at(i)->golpea(); 
+                    vectorenemigos->at(j)->quitarVida(estandoJugando->getPersonaje()->getDanyo());
+                    if(vectorenemigos->at(j)->getVida()<=0){
+                        delete vectorenemigos->at(j);
+                    }
+            }      
+        }
+      }   
+   }
+}
 
 bool **Nivel::getVisitadas(){
     return visitadas;

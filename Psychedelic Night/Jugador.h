@@ -11,6 +11,8 @@
  * Created on 27 de abril de 2017, 19:28
  */
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
 
 #include "Motor2D.h"
 #include <iostream>
@@ -19,6 +21,9 @@
 
 #ifndef JUGADOR_H
 #define JUGADOR_H
+
+using namespace std;
+using namespace sf;
 
 enum dirccionDisparo{
     Arriba = 0,
@@ -49,9 +54,11 @@ public:
     void quitarVida();
     float getVida(){return vida;};
     float getVidaActual(){return vidaActual;};
+    int getDanyo(){return danyo;};
     void aumentarVidaActual();
     void pintar();
     void pintarbalas();
+    vector<Bala*>* getMunicion();
     
         
 private:
@@ -65,9 +72,9 @@ private:
     float escala;
     // variable para animar los FRAMES de piernas
     int contadorPasos;
-    sf::Sprite cabeza;
-    sf::Sprite piernas;
-    sf::Texture texture;
+    sf::Sprite *cabeza;
+    sf::Sprite *piernas;
+    sf::Texture *texture;
     
     // avisadores de tecla pulsada MOV Jugador
     bool upFlag;
@@ -81,6 +88,10 @@ private:
     float vida;
     float vidaActual;
     int danyo;
+    
+    //Sonido
+    sf::SoundBuffer efecto_danyo;
+    sf::Sound golpe_critico;
     
     void animacioncaminar(sf::Clock relojSprite);
     void actualizarSprite ();

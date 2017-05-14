@@ -16,11 +16,13 @@
 using namespace std;
 Modificador::Modificador(int x, int y, int tipo) {
     
-    if(tipo == 1 && texture.loadFromFile("resources/seta.png")){
+    
+    texture= new Texture();
+    if(tipo == 1 && texture->loadFromFile("resources/seta.png")){
         this->tipo=tipo;
     }
     
-    if(tipo == 2 && texture.loadFromFile("resources/jeringa.png")){
+    if(tipo == 2 && texture->loadFromFile("resources/jeringa.png")){
         this->tipo=tipo;
     }
     colision = false;
@@ -33,7 +35,7 @@ Modificador::Modificador(int x, int y, int tipo) {
     
     modificador= new Sprite();
     
-    modificador->setTexture(texture);
+    modificador->setTexture(*texture);
     modificador->setOrigin(tamSprite/2,tamSprite/2);
     modificador->setTextureRect(sf:: IntRect(0*tamSprite, 0*tamSprite, tamSprite, tamSprite));  
     modificador->setPosition(x, y);   
@@ -51,12 +53,12 @@ Modificador::Modificador(int x, int y, sf::Clock relojBomba) {
     this->x= x;
     this->y = y;
  
-    if (!texture.loadFromFile("resources/bomba.png"))
+    if (!texture->loadFromFile("resources/bomba.png"))
     {
         std::cerr << "Error while loading texture modificador" << std::endl;
     }
     
-    modificador->setTexture(texture);
+    modificador->setTexture(*texture);
     modificador->setOrigin(tamSprite/2,tamSprite/2);
     modificador->setTextureRect(sf:: IntRect(0*tamSprite, 0*tamSprite, tamSprite, tamSprite));  
     modificador->setPosition(x, y);   
