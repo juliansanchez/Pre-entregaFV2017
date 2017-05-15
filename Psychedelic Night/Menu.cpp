@@ -25,7 +25,7 @@ Menu::Menu(float ancho, float alto) {
     text0->setFont(fuente);
     text0->setColor(sf::Color::White);
     text0->setString("Continuar");
-    text0->setPosition(Vector2f(ancho/2.5, alto/2.5));
+    text0->setPosition(Vector2f(ancho/2.5, alto/1.25));
     
     sf::Text* text1 = new sf::Text;
     text1->setFont(fuente);
