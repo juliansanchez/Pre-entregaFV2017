@@ -85,7 +85,6 @@ Nivel::~Nivel() {
 }
 
 void Nivel::crearMapa(){
-    imprimir();
     vectorenemigos = new std::vector<NPC*>;
     mapa = new Mapa();
     int p = pl->getHabitaciones();
@@ -115,8 +114,11 @@ void Nivel::crearMapa(){
             }
               else if (matriz[i][j] == 4){
                   boss= new Boss(j,i);
-                  //sf::Texture("resources/trampilla.png");
-                 // sf::Sprite();
+                  tex.loadFromFile("resources/trampilla.png");
+                  trampilla.setTexture(tex);
+                  trampilla.setOrigin(35/2, 35/2);
+                  trampilla.setTextureRect(sf::IntRect(14, 14, 35, 35));
+                  trampilla.setPosition(39*20*j + 39*20/2, 23*20*i + 23*20/2);
             }
         }
     }
@@ -132,20 +134,34 @@ void Nivel::dibujarNivel(){
     }
     tesoro->pintar();
     boss->dibujarBoss();
+    if (boss!=NULL){
+        Motor2D* motor2D = Motor2D::Instance();
+        motor2D->pintarSprites(trampilla);
+    }
 }
 
-void Nivel::aumentanivel(){   
-    delete pl;
-    delete mapa;
-    for (int i = 0; i<n+5; i++)
-        delete[] visitadas[i];   
+void Nivel::aumentanivel(){ 
+    while (!vectorenemigos->empty()){
+        delete vectorenemigos->back();
+        vectorenemigos->pop_back();
+    } 
+    vectorenemigos->clear();
+    delete vectorenemigos;
+    delete tesoro;
+    delete boss;
+    for (int i = 0; i<n+5; i++){
+        delete[] visitadas[i];
+    }
     delete[] visitadas; 
+    delete mapa;
+    delete pl;
     
     n++;
     pl = new Planta (n+5);
     posx = (n+5)/2;
     posy = (n+5)/2;
     crearMapa();
+    visitadas = new bool*[n+5];
     for (int i = 0; i<n+5; i++){
         visitadas[i] = new bool [n+5];
         for (int j = 0; j<n+5; j++)
@@ -182,22 +198,11 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
     tesoro->colisionObjeto(estandoJugando->getPersonaje());
     this->colisionEntreNPC();
     this->colisionBalasEnemigo();
-    //Colision con escalera
-    //if(boss==NULL){       
-    //}  
-}
 
-/*void Nivel::rellenarHabitaciones(){
-    vect = new vector<Coordenada*>;
-    int **matriz = pl->getMatriz();
-    for (int i = 0; i<pl->getTam(); i++){
-        for (int j = 0; j <pl->getTam(); j++){
-            if (matriz[i][j] == 1 || matriz[i][j] == 2 ||  matriz[i][j] == 4 || matriz[i][j] == 5){
-                vect->push_back(new Coordenada(i, j));
-            }
-        }
-    }
-}*/
+    if(boss==NULL){ 
+        //IF que compruebe la colision del jugador con el sprite trampilla
+    }  
+}
 
 
 void Nivel::colisionBalasEnemigo(){
