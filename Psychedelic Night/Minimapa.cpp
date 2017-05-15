@@ -17,10 +17,10 @@
 Minimapa* Minimapa::instanciaMinimapa = 0;
 
 Minimapa::Minimapa() {
-    minimapa.setViewport(sf::FloatRect(0.73f, 0.f, 0.25f, 0.25f));
+    minimapa.setViewport(sf::FloatRect(0.8f, 0.f, 0.2f, 0.2f));
     minimapa.zoom(1.f);
     rec.setSize(minimapa.getSize());
-    rec.setFillColor(sf::Color(0,0,0, 200));
+    rec.setFillColor(sf::Color(0,0,0, 140));
     vec = new vector<sf::RectangleShape*>;
 }
 

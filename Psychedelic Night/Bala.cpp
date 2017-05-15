@@ -26,9 +26,7 @@ Bala::Bala(int x,int y,int velx, int vely, float rangoDisparo) {
     
     clock.restart();
     
-    textura = new Texture();
-    
-    
+    textura = new Texture();  
     if(!textura->loadFromFile("resources/bala.png")){
         std::cerr << "Error while loading texture ISAAC" << std::endl;
         return;
@@ -45,7 +43,10 @@ Bala::Bala(int x,int y,int velx, int vely, float rangoDisparo) {
     
 }
 
-Bala::~Bala() {}
+Bala::~Bala() {
+    delete sprite;
+    delete textura;   
+}
 
 
 void Bala::colisionar(){     

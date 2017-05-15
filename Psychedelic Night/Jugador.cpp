@@ -95,8 +95,15 @@ Jugador::Jugador(const Jugador& orig) {
 }
 
 Jugador::~Jugador() {
+    while (!balas->empty()){
+        delete balas->back();
+        balas->pop_back();
+    } 
     balas->clear();
     delete balas;
+    delete cabeza;
+    delete piernas;
+    delete texture;
 }
 
 void Jugador::animacioncaminar(sf::Clock relojSprite){

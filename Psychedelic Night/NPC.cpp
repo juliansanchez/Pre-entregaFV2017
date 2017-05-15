@@ -24,10 +24,7 @@ NPC::NPC(int tipo, int posX, int posY) {
     contadorvueltas = 0;
     textura1 = new Texture();
     vida=4;
-    if(tipo==0){
-
-
-        
+    if(tipo==0){  
         if (!textura1->loadFromFile("resources/topo.png")) {
             cerr << "Error cargando la imagen";
             exit(0);
@@ -162,7 +159,16 @@ NPC::NPC(const NPC& orig) {
 }
 
 NPC::~NPC() {
-    
+    delete textura1;
+    while (!balas->empty()){
+        delete balas->back();
+        balas->pop_back();
+    } 
+    balas->clear();
+    delete balas;
+    delete[] enemigo;
+    if (tipo==1 || tipo==13)
+        delete[] enemy;
 }
 
 int NPC::getTipo(){

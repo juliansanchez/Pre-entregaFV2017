@@ -71,8 +71,8 @@ Nivel::~Nivel() {
     while (!vectorenemigos->empty()){
         delete vectorenemigos->back();
         vectorenemigos->pop_back();
-        vectorenemigos->clear();
     } 
+    vectorenemigos->clear();
     delete vectorenemigos;
     delete tesoro;
     delete boss;
@@ -114,8 +114,9 @@ void Nivel::crearMapa(){
                 tesoro = new Modificador (39*20*j + 39*20/2, 23*20*i + 23*20/2, tipo);
             }
               else if (matriz[i][j] == 4){
-                //escalera.setPosition(39*20*i + 39*20/2, 23*20*j + 23*20/2);
                   boss= new Boss(j,i);
+                  //sf::Texture("resources/trampilla.png");
+                 // sf::Sprite();
             }
         }
     }
@@ -181,7 +182,9 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
     tesoro->colisionObjeto(estandoJugando->getPersonaje());
     this->colisionEntreNPC();
     this->colisionBalasEnemigo();
-    
+    //Colision con escalera
+    //if(boss==NULL){       
+    //}  
 }
 
 /*void Nivel::rellenarHabitaciones(){
@@ -216,6 +219,7 @@ void Nivel::colisionBalasEnemigo(){
                 vectorenemigos->at(j)->quitarVida(estandoJugando->getPersonaje()->getDanyo());
                 if(vectorenemigos->at(j)->getVida()<=0){
                     delete vectorenemigos->at(j);
+                    vectorenemigos->erase(vectorenemigos->begin() + j);
                 }
             }                          
         }
@@ -224,10 +228,6 @@ void Nivel::colisionBalasEnemigo(){
 }
 
 void Nivel::colisionEntreNPC(){
-
- 
-
-
   for(int i = 0; i<vectorenemigos->size(); i++){
       for (int j = 0; j<vectorenemigos->size(); j++){
           if (vectorenemigos->at(j)->getPosMatrix_x() == posx && vectorenemigos->at(j)->getPosMatrix_y() == posy){ 
