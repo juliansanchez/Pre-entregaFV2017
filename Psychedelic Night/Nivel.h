@@ -43,6 +43,7 @@ public:
     void actualizar(sf::Clock cl, sf::Time tim);
     void colisionBalasEnemigo();
     void colisionEntreNPC();
+    int** getMatriz();
 private:
     int n; //Nivel
     string semilla;

@@ -49,6 +49,7 @@ private:
     sf::Clock clock2;
     sf::Time timeStartUpdate;
     sf::Time tiempo;
+    bool minimap;
 };
 
 #endif /* ESTADOJUGANDO_H */

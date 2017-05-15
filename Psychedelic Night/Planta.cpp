@@ -190,13 +190,14 @@ void Planta::anyadirboss (){
     if (vect->size()!=0){
         int r= (int) static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/vect->size())); //Cojo aleatoriamente una de las posiciones mas alejadas
         bool anyadida = false;
-        Coordenada* cord = vect->at(r);
-        Coordenada* origen = vect->at(r);
+        Coordenada* cord =new Coordenada(vect->at(r)->getX(),vect->at(r)->getY());
+        Coordenada* origen= new Coordenada(vect->at(r)->getX(),vect->at(r)->getY()); 
         while (!vect->empty()){
             delete vect->back();
             vect->pop_back();
-            vect->clear();
+           
         }
+         vect->clear();
         compruebahabitacion (cord->getX(), cord->getY(), vect);
         if (vect->size()==0)
             matriz[cord->getX()][cord->getY()] = 4;
@@ -215,11 +216,14 @@ void Planta::anyadirboss (){
         }
         if (!anyadida) //Si no se ha podido anyadir en una posicion contigua a la posicion mas lejana, lo sustituyo por esa
             matriz[origen->getX()][origen->getY()] = 4; 
+        
         while (!vect->empty()){
             delete vect->back();
             vect->pop_back();
             vect->clear();
         }
+        delete cord;
+        delete origen;
         delete vect; 
         NHabitaciones++;
     }   

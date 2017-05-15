@@ -238,8 +238,9 @@ void Nivel::colisionEntreNPC(){
                                 (vectorenemigos->at(j)->getY()+vectorenemigos->at(j)->getAltoSprite()) > (vectorenemigos->at(i)->getY())&&
                                 (vectorenemigos->at(i)->getX()+vectorenemigos->at(i)->getAnchoSprite())> (vectorenemigos->at(j)->getX()) &&
                                 (vectorenemigos->at(i)->getY()+vectorenemigos->at(i)->getAltoSprite())> (vectorenemigos->at(j)->getY())){
-
+                                cout<<"entro"<<endl;
                                 vectorenemigos->at(i)->posicionAnterior();
+                                
                             }                       
                         } 
                     }
@@ -273,4 +274,7 @@ void Nivel::setX(int x) {
 
 void Nivel::setY(int y){
     posy = y;
+}
+int** Nivel::getMatriz(){
+    return pl->getMatriz();
 }

@@ -402,8 +402,9 @@ void NPC::posicionAnterior(){
 
     if(tipo==1 || tipo==13){
     
-    enemigo[0]->move(-posicion_anterior_x/10,-posicion_anterior_y/10);
-    enemigo[1]->move(-posicion_anterior_x/10,-posicion_anterior_y/10);
+    enemigo[0]->move(-posicion_anterior_x/6,-posicion_anterior_y/6);
+    enemigo[1]->move(-posicion_anterior_x/6,-posicion_anterior_y/6);
+    cout<<posicion_anterior_x<<endl;
     
     }
 

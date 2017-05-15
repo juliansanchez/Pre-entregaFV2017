@@ -24,6 +24,7 @@ public:
     virtual ~Minimapa();
     sf::View getMinimapa();
     void dibujar();
+    void dibujartotal();
 private:
     Minimapa();
     Minimapa(const Minimapa& orig);
