@@ -43,8 +43,8 @@ HUD::~HUD() {
     while (!vec->empty()){
         delete vec->back();
         vec->pop_back();
-        vec->clear();
     } 
+    vec->clear();
     delete vec;
 }
 
@@ -62,8 +62,8 @@ void HUD::dibujar(){
     while (!vec->empty()){
         delete vec->back();
         vec->pop_back();
-        vec->clear();
     } 
+    vec->clear();
     for (int i = 0; i<estjue->getPersonaje()->getVida(); i++){
         if (i<vidaact){
             sf::Sprite* vida = new sf::Sprite(texvida);

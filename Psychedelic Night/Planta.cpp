@@ -63,9 +63,6 @@ Planta::Planta(const Planta& orig) {
 
 Planta::~Planta() {
     for (int i = 0; i<NHab; i++){
-        //for (int j = 0; j<NHab; j++){
-           // delete[] matriz[i][j];
-        //}
         delete[] matriz[i];
     }
     delete[] matriz; 
@@ -102,7 +99,7 @@ void Planta::creahabitacion (int& h, queue<Coordenada*> a){
         
         if (r!=-1){
             while (vect->size()>0 && h>0){ //Mientras tenga vecinas y aun queden habitaciones por colocar  
-                vect->erase(vect->begin() + r); //Esto va bien
+
                 float fi = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
                 if (fi > incprob){                                  
                     a.push(empiezo);
@@ -112,7 +109,7 @@ void Planta::creahabitacion (int& h, queue<Coordenada*> a){
                 }
                 else
                     matriz[empiezo->getX()][empiezo->getY()] = 3; //Habitacion inaccesible
-                
+                vect->erase(vect->begin() + r); //Esto va bien
                 if (vect->size()>0 && h>0){
                     r= (int) static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/vect->size()));
                     //delete empiezo;
@@ -120,8 +117,11 @@ void Planta::creahabitacion (int& h, queue<Coordenada*> a){
                 }            
             }
         }
-        for (vector<Coordenada*>::iterator f = vect->begin() ; f != vect->end(); ++f)
-            delete *f;
+        while (!vect->empty()){
+            delete vect->back();
+            vect->pop_back();       
+        }
+        vect->clear();
         delete vect;
         creahabitacion (h, a);
     }    
@@ -159,8 +159,9 @@ void Planta::anyadirtesoro (){
         while (!vecto->empty()){
             delete vecto->back();
             vecto->pop_back();
-            vecto->clear();
         } 
+        vecto->clear();
+        delete vecto;
         NHabitaciones++;
     }   
 }
@@ -176,8 +177,8 @@ void Planta::anyadirboss (){
                     while (!vect->empty()){
                         delete vect->back();
                         vect->pop_back();
-                        vect->clear();
                     }
+                    vect->clear();
                     vect->push_back(new Coordenada(i,j));
                     distmax = dist;
                 }
@@ -194,13 +195,14 @@ void Planta::anyadirboss (){
         Coordenada* origen= new Coordenada(vect->at(r)->getX(),vect->at(r)->getY()); 
         while (!vect->empty()){
             delete vect->back();
-            vect->pop_back();
-           
+            vect->pop_back();          
         }
-         vect->clear();
+        vect->clear();
         compruebahabitacion (cord->getX(), cord->getY(), vect);
-        if (vect->size()==0)
+        if (vect->size()==0){
             matriz[cord->getX()][cord->getY()] = 4;
+            anyadida = true;
+        }
         
         else{
             while (vect->size()>0 && !anyadida){                
@@ -210,8 +212,7 @@ void Planta::anyadirboss (){
                     anyadida = true;
                     matriz[cord->getX()][cord->getY()] = 4;
                 }
-                vect->erase(vect->begin() + r);
-                //delete cord;
+                vect->erase(vect->begin() + r);              
             }
         }
         if (!anyadida) //Si no se ha podido anyadir en una posicion contigua a la posicion mas lejana, lo sustituyo por esa
@@ -220,8 +221,8 @@ void Planta::anyadirboss (){
         while (!vect->empty()){
             delete vect->back();
             vect->pop_back();
-            vect->clear();
         }
+        vect->clear();
         delete cord;
         delete origen;
         delete vect; 

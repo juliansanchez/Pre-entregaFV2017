@@ -46,7 +46,7 @@ Pausa::Pausa(float ancho, float alto) {
     text[3].setPosition(sf::Vector2f(ancho/3.5, alto/4));
 
      
-     selecionarItem=0;
+    selecionarItem=0;
 }
 
 Pausa::Pausa(const Pausa& orig) {

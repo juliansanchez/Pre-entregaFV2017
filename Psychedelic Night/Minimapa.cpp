@@ -30,9 +30,9 @@ Minimapa::Minimapa(const Minimapa& orig) {
 Minimapa::~Minimapa() {
     while (!vec->empty()){
         delete vec->back();
-        vec->pop_back();
-        vec->clear();
+        vec->pop_back(); 
     } 
+    vec->clear();
     delete vec;
 }
 
@@ -49,9 +49,9 @@ sf::View Minimapa::getMinimapa(){
 void Minimapa::dibujar(){
     while (!vec->empty()){
         delete vec->back();
-        vec->pop_back();
-        vec->clear();
-    }       
+        vec->pop_back();       
+    }  
+    vec->clear();
     Motor2D*motor2D = Motor2D::Instance();
     motor2D->pintarRectShape(rec);
     EstadoJugando* estjue = EstadoJugando::Instance();
@@ -76,9 +76,9 @@ void Minimapa::dibujar(){
 void Minimapa::dibujartotal(){
     while (!vec->empty()){
         delete vec->back();
-        vec->pop_back();
-        vec->clear();
+        vec->pop_back();       
     }
+    vec->clear();
     Motor2D*motor2D = Motor2D::Instance();
     motor2D->pintarRectShape(rec);
     EstadoJugando* estjue = EstadoJugando::Instance();

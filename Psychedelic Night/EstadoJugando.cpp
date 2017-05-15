@@ -30,10 +30,24 @@ void EstadoJugando::Init(){
     HUD* hud = HUD::Instance();
     niveles->visitar(niveles->getX(), niveles->getY());
     personaje = new Jugador(39*20*3+ 39*20/2, 23*20*3+ 23*20/2);
-    printf("EstadoJugando iniciado\n");
     minimap=false;
     relojSprite.restart();
     timeStartUpdate =clock1.getElapsedTime();
+    printf("EstadoJugando iniciado\n");
+}
+
+void EstadoJugando::Init(unsigned int s){
+    niveles = new Nivel(s);
+    Vistas* general = Vistas::Instance();
+    general->centrarGeneral(niveles->getNivel());
+    Minimapa* minimapa = Minimapa::Instance();
+    HUD* hud = HUD::Instance();
+    niveles->visitar(niveles->getX(), niveles->getY());
+    personaje = new Jugador(39*20*3+ 39*20/2, 23*20*3+ 23*20/2);
+    minimap=false;
+    relojSprite.restart();
+    timeStartUpdate =clock1.getElapsedTime();
+    printf("EstadoJugando Semilla iniciado\n");
 }
 
 void EstadoJugando::Limpiar(){

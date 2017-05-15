@@ -67,8 +67,8 @@ Menu::~Menu() {
     while (!text->empty()){
         delete text->back();
         text->pop_back();
-        text->clear();
     }
+    text->clear();
     delete text;
 }
 
