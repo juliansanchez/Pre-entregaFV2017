@@ -44,6 +44,8 @@ public:
 
     int getPosMatrix_x();
     int getPosMatrix_y();
+    void quitarVida();
+    float getVida(){return vida;};
 private:
     int tipo;
     int vida;

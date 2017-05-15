@@ -160,10 +160,6 @@ void Nivel::imprimir(){
     pl->imprimir();
 }
 
-int** Nivel::getMatriz(){
-    return pl->getMatriz();
-}
-
 int Nivel::getNivel(){
     return n;
 }
@@ -183,7 +179,9 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
     }
     
     tesoro->colisionObjeto(estandoJugando->getPersonaje());
+    this->colisionEntreNPC();
     this->colisionBalasEnemigo();
+    
 }
 
 /*void Nivel::rellenarHabitaciones(){
@@ -207,21 +205,48 @@ void Nivel::colisionBalasEnemigo(){
   for(int i = 0 ; i<estandoJugando->getPersonaje()->getMunicion()->size(); i++){
       for (int j = 0; j<vectorenemigos->size(); j++){
           if (vectorenemigos->at(j)->getPosMatrix_x() == posx && vectorenemigos->at(j)->getPosMatrix_y() == posy){
-              cout<<"Julian SI ENTRO"<<endl;
+
+                    
             if((vectorenemigos->at(j)->getX()+vectorenemigos->at(j)->getAnchoSprite()) > (estandoJugando->getPersonaje()->getMunicion()->at(i)->getX())&&  
                 (vectorenemigos->at(j)->getY()+vectorenemigos->at(j)->getAltoSprite()) > (estandoJugando->getPersonaje()->getMunicion()->at(i)->getY())&&
                 (estandoJugando->getPersonaje()->getMunicion()->at(i)->getX()+16)> (vectorenemigos->at(j)->getX()) &&
                 (estandoJugando->getPersonaje()->getMunicion()->at(i)->getY()+16)> (vectorenemigos->at(j)->getY())){
-                
-                    estandoJugando->getPersonaje()->getMunicion()->at(i)->golpea(); 
-                    vectorenemigos->at(j)->quitarVida(estandoJugando->getPersonaje()->getDanyo());
-                    if(vectorenemigos->at(j)->getVida()<=0){
-                        delete vectorenemigos->at(j);
-                    }
-            }      
+
+                estandoJugando->getPersonaje()->getMunicion()->at(i)->golpea(); 
+                vectorenemigos->at(j)->quitarVida(estandoJugando->getPersonaje()->getDanyo());
+                if(vectorenemigos->at(j)->getVida()<=0){
+                    delete vectorenemigos->at(j);
+                }
+            }                          
         }
       }   
    }
+}
+
+void Nivel::colisionEntreNPC(){
+
+ 
+
+
+  for(int i = 0; i<vectorenemigos->size(); i++){
+      for (int j = 0; j<vectorenemigos->size(); j++){
+          if (vectorenemigos->at(j)->getPosMatrix_x() == posx && vectorenemigos->at(j)->getPosMatrix_y() == posy){ 
+                if (vectorenemigos->at(i)->getPosMatrix_x() == posx && vectorenemigos->at(i)->getPosMatrix_y() == posy){
+                    if (vectorenemigos->at(i)!=NULL && vectorenemigos->at(j)!=NULL){
+                        if(i != j){
+                            if((vectorenemigos->at(j)->getX()+vectorenemigos->at(j)->getAnchoSprite()) > (vectorenemigos->at(i)->getX())&&  
+                                (vectorenemigos->at(j)->getY()+vectorenemigos->at(j)->getAltoSprite()) > (vectorenemigos->at(i)->getY())&&
+                                (vectorenemigos->at(i)->getX()+vectorenemigos->at(i)->getAnchoSprite())> (vectorenemigos->at(j)->getX()) &&
+                                (vectorenemigos->at(i)->getY()+vectorenemigos->at(i)->getAltoSprite())> (vectorenemigos->at(j)->getY())){
+
+                                vectorenemigos->at(i)->posicionAnterior();
+                            }                       
+                        } 
+                    }
+                }
+             }
+        }   
+    }
 }
 
 bool **Nivel::getVisitadas(){

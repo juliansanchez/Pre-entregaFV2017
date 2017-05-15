@@ -50,6 +50,7 @@ public:
     void colisionBalasPersonaje();
     void quitarVida(int herida);
     int getVida();
+    void posicionAnterior();
     
 private:
     int tipo;
@@ -79,6 +80,11 @@ private:
     
     bool colision;
     int cont_colision;
+    
+    int posicion_actual_x;
+    int posicion_actual_y;
+    int posicion_anterior_x;
+    int posicion_anterior_y;
     
 
 };

@@ -16,6 +16,7 @@
 Boss::Boss(int posX, int posY) {
     this->posMatrix_x= posX;
     this->posMatrix_y=posY;
+    vida=30;
     
       
     
@@ -102,8 +103,8 @@ void Boss::dibujarBoss(){
 
 void Boss::movBoss(Clock clock2, Time tiempo){
     
-    float direcx =  12+static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/2));
-    float direcy =  12+static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/2));
+    float direcx =  12+static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/3));
+    float direcy =  12+static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/3));
     float signox =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
     float signoy =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
     if (signox >= 0.5)
@@ -114,10 +115,10 @@ void Boss::movBoss(Clock clock2, Time tiempo){
     if(contador_vueltas%this->numCambio==0){
         cambio_sprite=(cambio_sprite+1)%(this->num_sprites-2);
         for(int i=0; i<4;i++){
-            this->enemigo[i]->move(signox*25,signoy*25);
+            this->enemigo[i]->move(signox*20,signoy*20);
         }
         
-        if(retraso==7){
+        if(retraso==4){
             cambio_sprite=2;
             for(int i=0;i<2;i++){
                 balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,signox*direcx,signoy*direcy,rangoDisparo));
@@ -142,7 +143,7 @@ void Boss::movBoss(Clock clock2, Time tiempo){
         if(retraso2==18){
             cambio_sprite=3;
             for(int i=0;i<3;i++){
-                bicho->push_back(new NPC(13,posMatrix_x*39*20,posMatrix_y*23*20 + 23*20/2));
+                bicho->push_back(new NPC(13,posMatrix_x,posMatrix_y));
                 //posMatrix_x*39*20 + 39*20/2
                 //posMatrix_y*23*20 + 23*20/2
             }
@@ -172,7 +173,7 @@ void Boss::ActualizarDisparo(){
         // actualizo posicion de la bala
         for(int i = 0 ; i<balas->size(); i++){
             if(balas->at(i)){
-                balas->at(i)->actualiza(); // actualizo posicion de la bala
+                balas->at(i)->actualiza2(); // actualizo posicion de la bala
                 if(balas->at(i)->destruirBala){
                     delete balas->at(i); // borramos la bala del vector
                     balas->erase(balas->begin()+i); // libero memoria de pos del vector

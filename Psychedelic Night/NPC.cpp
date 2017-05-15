@@ -110,8 +110,8 @@ NPC::NPC(int tipo, int posX, int posY) {
         *this->enemigo[1]=c1.GetSprite();
         *this->enemigo[2]=c2.GetSprite();
         *this->enemigo[3]=c3.GetSprite();
-        this->alto= c.getAlto();
-        this->ancho=c.getAncho();
+        this->alto= c2.getAlto();
+        this->ancho=c2.getAncho();
         
         this->num_sprites=4;
         this->numCambio=12;
@@ -137,8 +137,8 @@ NPC::NPC(int tipo, int posX, int posY) {
         
         this->enemigo[0]->setScale(2,2);
         this->enemigo[1]->setScale(2,2);
-        this->alto= m.getAlto();
-        this->ancho=m.getAncho();
+        this->alto= m.getAlto()*2;
+        this->ancho=m.getAncho()*2;
         
         
         this->num_sprites=2;
@@ -172,6 +172,7 @@ int NPC::getTipo(){
 void NPC::nextSprite(int contadorVueltas){   
      if(contadorVueltas%this->numCambio==0){
             cambio_sprite=(cambio_sprite+1)%this->num_sprites;
+            
         }
 }
 
@@ -190,10 +191,14 @@ void NPC::movMosquito(){
 
     if(distancia>200){
     angle+=0.1;
-    x= (2*cos(angle)+ lenght);
-    y= (2*sin(angle)+lenght);
-    enemigo[0]->move(x,y);
-    enemigo[1]->move(x,y);
+    posicion_anterior_x=posicion_actual_x;
+    posicion_anterior_y=posicion_actual_y;
+    posicion_actual_x= (2*cos(angle)+ lenght);
+    posicion_actual_y= (2*sin(angle)+lenght);
+    enemigo[0]->move(posicion_actual_x,posicion_actual_y);
+    enemigo[1]->move(posicion_actual_x,posicion_actual_y);
+    
+    
     }else{
        enemigo[0]->move(-distancia_x/15,-distancia_y/15);
        enemigo[1]->move(-distancia_x/15,-distancia_y/15);
@@ -206,13 +211,33 @@ void NPC::movTopo(Time tiempo, int cont_vueltas){
     
     float x_topo=0;
     float y_topo=0;
+    float distancia_x,distancia_y,distancia;
     if(cont_vueltas%this->numCambio==0){
             
         if(retraso>12){
             cambio_sprite=(cambio_sprite+1)%this->num_sprites;
             if(cambio_sprite==6){
             retraso=0;
-            }    
+            }
+            
+            if(cambio_sprite==4 || cambio_sprite==5){
+              EstadoJugando* estandoJugando= EstadoJugando::Instance();
+              int salidaDisparo;
+              if(estandoJugando->getPersonaje()->getX()< this->getX()){
+                  salidaDisparo=-16;
+                  enemigo[cambio_sprite]->setScale(-1,1);
+              }else{
+                  salidaDisparo=16;
+                  enemigo[cambio_sprite]->setScale(1,1);
+              }
+              if(cambio_sprite==4){
+                distancia_x= (this->getX()) - (estandoJugando->getPersonaje()->getX());
+                distancia_y= (this->getY()) - (estandoJugando->getPersonaje()->getY());
+                distancia= sqrt(pow(distancia_x,2)+pow(distancia_x,2) );
+                balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x+salidaDisparo,enemigo[cambio_sprite]->getPosition().y,-distancia_x/12,-distancia_y/12,rangoDisparo));
+              }
+            
+            }
         }
 
         if(retraso==6){
@@ -292,7 +317,7 @@ vector<Bala*>  NPC::GetBala(){
 
 void NPC::pintarDisparo(){   
     Motor2D *motor2D = Motor2D::Instance();
-    if(tipo==2){
+    if(tipo==2 || tipo==0){
        for(int i = 0 ; i<balas->size(); i++){
            if(balas->at(i)){
                motor2D->pintarSprites(balas->at(i)->getSprite());
@@ -310,6 +335,7 @@ void NPC::accionesEnemigo(Clock reloj2, Time tiempo){
     }
     if(tipo==0){
         this->movTopo(tiempo,contadorvueltas);
+        this->ActualizarDisparo();
     }
     if(tipo==2 || tipo==13){
         if(contadorvueltas%49==0){  
@@ -326,26 +352,29 @@ void NPC::colisionPersonaje(){
      EstadoJugando* estandoJugando= EstadoJugando::Instance();
 
      
-    if((estandoJugando->getPersonaje()->getX()+32) > (this->getX()-ancho/4)&&  
-            (estandoJugando->getPersonaje()->getY()+42) > (this->getY()-alto/4) &&
-            (this->getX()+ancho/1.3)> (estandoJugando->getPersonaje()->getX()) &&
-            (this->getY()+alto/1.3)> (estandoJugando->getPersonaje()->getY())){
+    if((estandoJugando->getPersonaje()->getX()+32) > (this->getX())&&  
+            (estandoJugando->getPersonaje()->getY()+42) > (this->getY()) &&
+            (this->getX()+this->enemigo[cambio_sprite]->getTextureRect().width)> (estandoJugando->getPersonaje()->getX()) &&
+            (this->getY()+this->enemigo[cambio_sprite]->getTextureRect().height)> (estandoJugando->getPersonaje()->getY())){
            
         if(!colision){
             estandoJugando->getPersonaje()->quitarVida();
-            if(estandoJugando->getPersonaje()->getVidaActual()==0){
-               // exit(0);
-            }
             colision=true;
-            cout<<estandoJugando->getPersonaje()->getVidaActual()<<endl;
+
         }else{
-            cont_colision++;
-            if(cont_colision==10){
+            if(cont_colision>25){
+                cont_colision=25; 
+            }
+            if(cont_colision==25){
                 colision=false;
                 cont_colision=0;
             }
         }
     }
+     if(colision){
+    cont_colision++;
+     }
+     
 }
 
 
@@ -364,10 +393,21 @@ void NPC::colisionBalasPersonaje(){
                 (balas->at(i)->getY()+16)> (estandoJugando->getPersonaje()->getY())){
                 estandoJugando->getPersonaje()->quitarVida();
                 balas->at(i)->golpea();
-                cout<<estandoJugando->getPersonaje()->getVidaActual()<<endl;
             }     
         }
     }    
+}
+
+void NPC::posicionAnterior(){
+
+    if(tipo==1 || tipo==13){
+    
+    enemigo[0]->move(-posicion_anterior_x/10,-posicion_anterior_y/10);
+    enemigo[1]->move(-posicion_anterior_x/10,-posicion_anterior_y/10);
+    
+    }
+
+
 }
 
 

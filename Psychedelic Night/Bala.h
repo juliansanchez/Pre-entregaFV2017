@@ -15,6 +15,7 @@
 #define BALA_H
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <math.h>
 
 using namespace sf;
 using namespace std;
@@ -26,6 +27,7 @@ public:
     
     void colisionar();
     void actualiza();
+    void actualiza2();
     int getX();
     int getY();
     bool destruirBala;
@@ -36,6 +38,7 @@ private:
     int posy;
     int velx;
     int vely;
+    float angle;
     float rangoDisparo;
     bool colisionObjeto;
     

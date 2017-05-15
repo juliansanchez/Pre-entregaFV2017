@@ -40,7 +40,7 @@ Bala::Bala(int x,int y,int velx, int vely, float rangoDisparo) {
     sprite->setOrigin(16,16); 
     sprite->setScale(0.5,0.5);
     
-    
+    this->angle=0;
     this->colisionObjeto=false;
     
 }
@@ -57,6 +57,27 @@ void Bala::colisionar(){
 void Bala::actualiza(){
     posx+=velx;
     posy+=vely;
+
+    if(clock.getElapsedTime().asSeconds()< rangoDisparo){
+        sprite->setPosition(posx,posy);  
+    }
+    else{
+        destruirBala = true;}
+    
+    if(colisionObjeto==true){
+        destruirBala=true;
+    }
+    
+}
+
+void Bala::actualiza2(){
+    
+    float lenght = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/8));
+    
+    angle+=0.1;
+   
+    posx+=velx*cos(angle)+lenght;
+    posy+=vely*sin(angle)+lenght;
 
     if(clock.getElapsedTime().asSeconds()< rangoDisparo){
         sprite->setPosition(posx,posy);  
