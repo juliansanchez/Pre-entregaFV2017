@@ -68,6 +68,19 @@ Boss::Boss(const Boss& orig) {
 }
 
 Boss::~Boss() {
+    while (!balas->empty()){
+        delete balas->back();
+        balas->pop_back(); 
+    } 
+    balas->clear();
+    delete balas;
+    while (!bicho->empty()){
+        delete bicho->back();
+        bicho->pop_back(); 
+    } 
+    bicho->clear();
+    delete bicho;
+    delete[] enemigo;
 }
 
 int Boss::getPosMatrix_x(){
