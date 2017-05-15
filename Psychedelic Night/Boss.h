@@ -22,6 +22,7 @@
 #include "Bala.h"
 #include "NPC.h"
 
+
 using namespace std;
 using namespace sf;
 
@@ -59,6 +60,7 @@ private:
     float angle;
     int retraso;
     int retraso2;
+    int retraso3;
     
     vector <Bala*>* balas;
     vector <NPC*>* bicho;

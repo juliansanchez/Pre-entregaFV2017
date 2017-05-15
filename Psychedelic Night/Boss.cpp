@@ -12,6 +12,7 @@
  */
 
 #include "Boss.h"
+#include "EstadoJugando.h"
 
 Boss::Boss(int posX, int posY) {
     this->posMatrix_x= posX;
@@ -52,6 +53,7 @@ Boss::Boss(int posX, int posY) {
     contador_vueltas=0;
     retraso=0;
     retraso2=7;
+    retraso3=0;
     balas= new std::vector<Bala*>;
     bicho=new std::vector<NPC*>;
     int initX =posMatrix_x*39*20 + 39*20/2 ;
@@ -103,28 +105,59 @@ void Boss::dibujarBoss(){
 
 void Boss::movBoss(Clock clock2, Time tiempo){
     
-    float direcx =  12+static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/3));
-    float direcy =  12+static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/3));
-    float signox =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
-    float signoy =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
-    if (signox >= 0.5)
-        signox = signox * (-1);
-    if (signoy >= 0.5)
-        signoy = signoy * (-1);
+    float distancia_x,distancia_y,distancia;
+    float direcx, direcy;
+    EstadoJugando* estandoJugando= EstadoJugando::Instance();
+    
+    distancia_x= (this->getX()) - (estandoJugando->getPersonaje()->getX());
+    distancia_y= (this->getY()) - (estandoJugando->getPersonaje()->getY());
+    distancia= sqrt(pow(distancia_x,2)+pow(distancia_x,2) );
+    float signox ;
+    float signoy ;
+    if(distancia_x<=0){
+        signox=1;
+    }else{
+        signox=-1;
+    }
+    if(distancia_y<=0){
+        signoy=1;
+    }else{
+        signoy=-1;
+    }
+
     
     if(contador_vueltas%this->numCambio==0){
         cambio_sprite=(cambio_sprite+1)%(this->num_sprites-2);
-        for(int i=0; i<4;i++){
-            this->enemigo[i]->move(signox*20,signoy*20);
+        
+        if(retraso3<15){
+            for(int i=0; i<4;i++){
+                this->enemigo[i]->move(signox*16,signoy*16);
+            }
+        }else{
+            for(int i=0; i<4;i++){
+                this->enemigo[i]->move(-distancia_x/5,-distancia_y/5);
+
+            }
+            if(retraso3>20){
+                retraso3=0;
+            }
         }
+        retraso3++;
         
         if(retraso==4){
             cambio_sprite=2;
             for(int i=0;i<2;i++){
+                    
+                direcx =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/15));
+                direcy =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/15));
+                
                 balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,signox*direcx,signoy*direcy,rangoDisparo));
                 balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,signoy*direcy,signox* direcx,rangoDisparo));
                 balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,-signox*direcx,-signoy*direcy,rangoDisparo));
                 balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,-signoy*direcy,-signox* direcx,rangoDisparo));
+                balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,-distancia_x/12,-distancia_y/12,rangoDisparo));
+
+              
                 
                 if (signox <0){
                     signox = 1;

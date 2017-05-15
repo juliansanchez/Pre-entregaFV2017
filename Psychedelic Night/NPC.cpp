@@ -107,8 +107,9 @@ NPC::NPC(int tipo, int posX, int posY) {
         *this->enemigo[1]=c1.GetSprite();
         *this->enemigo[2]=c2.GetSprite();
         *this->enemigo[3]=c3.GetSprite();
-        this->alto= c2.getAlto();
-        this->ancho=c2.getAncho();
+        this->alto= c3.getAlto();
+        this->ancho=c3.getAncho();
+        
         
         this->num_sprites=4;
         this->numCambio=12;
@@ -357,25 +358,47 @@ void NPC::colisionPersonaje(){
     
      EstadoJugando* estandoJugando= EstadoJugando::Instance();
 
-     
-    if((estandoJugando->getPersonaje()->getX()+32) > (this->getX())&&  
-            (estandoJugando->getPersonaje()->getY()+42) > (this->getY()) &&
-            (this->getX()+this->enemigo[cambio_sprite]->getTextureRect().width)> (estandoJugando->getPersonaje()->getX()) &&
-            (this->getY()+this->enemigo[cambio_sprite]->getTextureRect().height)> (estandoJugando->getPersonaje()->getY())){
-           
-        if(!colision){
-            estandoJugando->getPersonaje()->quitarVida();
-            colision=true;
+    if(tipo !=2){ 
+        if((estandoJugando->getPersonaje()->getX()+32) > (this->getX())&&  
+                (estandoJugando->getPersonaje()->getY()+42) > (this->getY()) &&
+                (this->getX()+this->enemigo[cambio_sprite]->getTextureRect().width)> (estandoJugando->getPersonaje()->getX()) &&
+                (this->getY()+this->enemigo[cambio_sprite]->getTextureRect().height)> (estandoJugando->getPersonaje()->getY())){
 
-        }else{
-            if(cont_colision>25){
-                cont_colision=25; 
-            }
-            if(cont_colision==25){
-                colision=false;
-                cont_colision=0;
+            if(!colision){
+                estandoJugando->getPersonaje()->quitarVida();
+                colision=true;
+
+            }else{
+                if(cont_colision>25){
+                    cont_colision=25; 
+                }
+                if(cont_colision==25){
+                    colision=false;
+                    cont_colision=0;
+                }
             }
         }
+    }else{
+        if((estandoJugando->getPersonaje()->getX()+32) > (this->getX()+300)&&  
+                (estandoJugando->getPersonaje()->getY()+42) > (this->getY()-300) &&
+                (this->getX()+70)> (estandoJugando->getPersonaje()->getX()) &&
+                (this->getY()+75)> (estandoJugando->getPersonaje()->getY())){
+
+            if(!colision){
+                estandoJugando->getPersonaje()->quitarVida();
+                colision=true;
+
+            }else{
+                if(cont_colision>25){
+                    cont_colision=25; 
+                }
+                if(cont_colision==25){
+                    colision=false;
+                    cont_colision=0;
+                }
+            }
+        }
+    
     }
      if(colision){
     cont_colision++;

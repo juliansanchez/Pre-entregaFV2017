@@ -73,7 +73,7 @@ void Bala::actualiza(){
 
 void Bala::actualiza2(){
     
-    float lenght = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/8));
+    float lenght = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/15));
     
     angle+=0.1;
    
