@@ -13,6 +13,7 @@
 
 #include "Menu.h"
 #include "Motor2D.h"
+#include <sstream>
 
 
 Menu::Menu(float ancho, float alto) {
@@ -111,8 +112,11 @@ void Menu::MoveDown(){
 }
 
 void Menu::actualizar(int g){
-    std::string v = std::to_string(semilla);
-    text5.setString(v);
+    stringstream convert;
+    string result;
+    convert<<semilla;
+    result=convert.str();
+    text5.setString(result);
     if (!act && g==1){
         delete text->back();
         text->pop_back();
