@@ -73,7 +73,6 @@ Modificador::Modificador(const Modificador& orig) {
 
 Modificador::~Modificador() {
     delete modificador;
-    cout<<"SE ESTA BORRANDO"<<endl;
 }
 
 

@@ -32,7 +32,6 @@ public:
     void MoveUp();
     void MoveDown();
     int GetPressedItem(){return selecionarItem;}
-    //void BucleMenu(Menu menu, RenderWindow pantalla);
 private:
     int selecionarItem;
     Font fuente;
@@ -40,6 +39,7 @@ private:
     Texture fondo;
     Sprite *dibujo;
     bool act;
+    unsigned int semilla;
 };
 
 #endif /* MENU_H */

@@ -16,6 +16,8 @@
 //#include <string>
 #include "Nivel.h"
 #include "EstadoJugando.h"
+#include "Minimapa.h"
+#include "Vistas.h"
 #include <sstream>
 
 
@@ -132,9 +134,11 @@ void Nivel::dibujarNivel(){
             vectorenemigos->at(i)->dibujarEnemigo();
         }
     }
-    tesoro->pintar();
-    boss->dibujarBoss();
-    if (boss!=NULL){
+    if (tesoro!=NULL)
+        tesoro->pintar();
+    if (boss!=NULL)
+        boss->dibujarBoss();
+    else {
         Motor2D* motor2D = Motor2D::Instance();
         motor2D->pintarSprites(trampilla);
     }
@@ -167,6 +171,8 @@ void Nivel::aumentanivel(){
         for (int j = 0; j<n+5; j++)
             visitadas[i][j] = false;        
     }
+    Vistas* g = Vistas::Instance();
+    g->centrarGeneral(n);
 }
 
 string Nivel::getSemilla(){
@@ -191,17 +197,16 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
             vectorenemigos->at(i)->colisionBalasPersonaje();
         }
     }
-    if (boss->getPosMatrix_x() == posx && boss->getPosMatrix_y() == posy){
-    boss->movBoss(cl,tim);
+    if (boss!=NULL && boss->getPosMatrix_x() == posx && boss->getPosMatrix_y() == posy)
+        boss->movBoss(cl,tim);
+    else{
+         //IF que compruebe la colision del jugador con el sprite trampilla
     }
     
-    tesoro->colisionObjeto(estandoJugando->getPersonaje());
+    if (tesoro!=NULL)
+        tesoro->colisionObjeto(estandoJugando->getPersonaje());
     this->colisionEntreNPC();
-    this->colisionBalasEnemigo();
-
-    if(boss==NULL){ 
-        //IF que compruebe la colision del jugador con el sprite trampilla
-    }  
+    this->colisionBalasEnemigo();  
 }
 
 

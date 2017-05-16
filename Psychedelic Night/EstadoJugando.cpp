@@ -87,7 +87,11 @@ void EstadoJugando::ManejarEventos(MotorJuego* juego){
                     case sf::Keyboard::Down: personaje->setDirDisparo(1); break;
                     case sf::Keyboard::Left: personaje->setDirDisparo(2); break;
                     case sf::Keyboard::Right: personaje->setDirDisparo(3); break;
+                    //LOS CHETOS
                     case sf::Keyboard::Z: if (!minimap) minimap = true; else minimap = false; break;
+                    case sf::Keyboard::X: personaje->aumentarVidaActual(); break;
+                    case sf::Keyboard::B: juego->Reiniciar(EstadoJugando::Instance()); break;
+                    case sf::Keyboard::N: niveles->aumentanivel(); break;
                 }           
             }
             if (event.type == sf::Event::KeyReleased){

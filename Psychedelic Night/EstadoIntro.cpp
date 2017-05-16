@@ -75,7 +75,7 @@ void EstadoIntro::ManejarEventos(MotorJuego* juego){
                             juego->Reiniciar(EstadoJugando::Instance());
                         break;
                         case 1:
-                            std::cout<<"has pulsaldo el boton de opciones"<< std::endl;
+                            //OPCIONES                            
                         break;
                         case 2:
                             juego->Salir();
@@ -84,6 +84,10 @@ void EstadoIntro::ManejarEventos(MotorJuego* juego){
                             juego->DesapilarEstado();
                     }
                 break;
+                case sf::Keyboard::Num0:
+                    
+                    break;
+                    
             }           
         }		
     }

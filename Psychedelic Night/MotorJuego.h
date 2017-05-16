@@ -29,7 +29,7 @@ public:
     void ManejarEventos();
     void Actualizar();
     void Dibujar();
-    bool Activo() { return activo; }
+    bool Activo() {return activo; }
     void Salir() { activo = false; }
     sf::RenderWindow* ventana;
     int getTam();
