@@ -57,7 +57,7 @@ private:
     int posx; //Posicion del jugador en la matriz de mapas
     int posy;
     vector<NPC*>* vectorenemigos;
-    sf::Sprite trampilla;
+    sf::Sprite *trampilla;
     sf::Texture tex;
 };
 

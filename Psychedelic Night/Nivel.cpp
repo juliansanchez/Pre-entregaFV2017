@@ -119,10 +119,11 @@ void Nivel::crearMapa(){
               else if (matriz[i][j] == 4){
                   boss= new Boss(j,i);
                   tex.loadFromFile("resources/trampilla.png");
-                  trampilla.setTexture(tex);
-                  trampilla.setOrigin(35/2, 35/2);
-                  trampilla.setTextureRect(sf::IntRect(14, 14, 35, 35));
-                  trampilla.setPosition(39*20*j + 39*20/2, 23*20*i + 23*20/2);
+                  trampilla= new Sprite();
+                  trampilla->setTexture(tex);
+                  trampilla->setOrigin(35/2, 35/2);
+                  trampilla->setTextureRect(sf::IntRect(14, 14, 35, 35));
+                  trampilla->setPosition(39*20*j + 39*20/2, 23*20*i + 23*20/2);
             }
         }
     }
@@ -142,7 +143,9 @@ void Nivel::dibujarNivel(){
         boss->dibujarBoss();
     else {
         Motor2D* motor2D = Motor2D::Instance();
-        motor2D->pintarSprites(trampilla);
+        if(trampilla!=NULL){
+            motor2D->pintarSprites(*trampilla);
+        }
     }
 }
 
@@ -206,7 +209,16 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
         boss->colisionBoss();
         this->colisionBalasBoss();
     }else{
-         //IF que compruebe la colision del jugador con el sprite trampilla
+        if(trampilla !=NULL){
+            if((trampilla->getPosition().x+trampilla->getTextureRect().width) > (estandoJugando->getPersonaje()->getX())&&  
+                (trampilla->getPosition().y+trampilla->getTextureRect().height) > (estandoJugando->getPersonaje()->getY())&&
+                (estandoJugando->getPersonaje()->getX()+16)> (trampilla->getPosition().x) &&
+                (estandoJugando->getPersonaje()->getY()+16)> (trampilla->getPosition().y)){
+
+                    delete trampilla;
+                    trampilla=NULL;   
+            } 
+        }
     }
     
     if (tesoro!=NULL){
