@@ -206,8 +206,13 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
          //IF que compruebe la colision del jugador con el sprite trampilla
     }
     
-    if (tesoro!=NULL)
+    if (tesoro!=NULL){
         tesoro->colisionObjeto(estandoJugando->getPersonaje());
+        if(tesoro->getColision()){
+            delete tesoro;
+            tesoro=NULL;
+        }
+    }
     this->colisionEntreNPC();
     this->colisionBalasEnemigo();  
 }

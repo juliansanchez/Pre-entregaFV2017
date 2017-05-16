@@ -32,6 +32,9 @@ public:
     void Modificacion(Jugador* j);
     void pintar();
     void colisionObjeto(Jugador *j);
+    bool getColision(){return colision;}
+    int getPosMatrix_x(){return x;}
+    int getPosMatrix_y(){return y;}
 
     
     

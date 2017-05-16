@@ -73,6 +73,7 @@ Modificador::Modificador(const Modificador& orig) {
 
 Modificador::~Modificador() {
     delete modificador;
+    delete texture;
 }
 
 
@@ -118,7 +119,6 @@ void Modificador::colisionObjeto(Jugador *j){
             j->aumentarVida();
             j->aumentarVidaActual();
         }  
-        this->~Modificador();
     }
 }
 
