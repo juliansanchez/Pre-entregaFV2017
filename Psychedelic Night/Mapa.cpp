@@ -125,18 +125,23 @@ void Mapa::leerMapa(int NH){
     } 
     //Reserva de memoria para los sprites
     _tilemapSprite=new sf::Sprite****[NH];
+    _tiles=new int***[NH];
     for(int t=0; t<NH; t++){
         _tilemapSprite[t] = new sf::Sprite***[_numLayers];
+        _tiles[t]=new int**[_numLayers];
     for(int l=0; l<_numLayers; l++){
         _tilemapSprite[t][l]=new sf::Sprite**[_height];
+        _tiles[t][l]=new int*[_height];
     }
     } 
     for(int t=0; t<NH; t++){
     for(int l=0; l<_numLayers; l++){
         for(int y=0; y<_height; y++){
             _tilemapSprite[t][l][y]= new sf::Sprite*[_width];
+            _tiles[t][l][y]=new int[_width];
             for(int x=0; x<_width; x++){
                 _tilemapSprite[t][l][y][x]=new sf::Sprite();
+                _tiles[t][l][y][x]=0;
             }
         }
     }
@@ -184,13 +189,9 @@ void Mapa::leerMapa(int NH){
     }  */
 }
 
-void Mapa::setPosition(int h, int ancho, int alto) {
+void Mapa::setPosition(int puer[], int h, int ancho, int alto) {
     int cont = 0;
-    sf::Sprite *pin = new sf::Sprite(pinchos);
-    sf::Sprite *roc = new sf::Sprite(roca);
-    sf::Sprite *fue = new sf::Sprite(fuego);
-    
-    while(cont < 20){
+    while(cont < 15){
         int x = 0 + rand()%(39-4);
         int y = 0 + rand()%(23-4);
         if(_tilemap[1][y][x] == 0){
@@ -198,29 +199,31 @@ void Mapa::setPosition(int h, int ancho, int alto) {
             
             cont = cont + 1;
             if(_tilemap[1][y][x] == 2){
-                _tilemapSprite[h][1][y][x]=roc;
+                _tilemapSprite[h][1][y][x]= new sf::Sprite(fuego);
             }
             else if(_tilemap[1][y][x] == 3){
-                _tilemapSprite[h][1][y][x]=fue;
-            }
-            else{
-                _tilemapSprite[h][1][y][x]=pin;
-            }           
+                _tilemapSprite[h][1][y][x]=new sf::Sprite(roca);
+            }          
         }
     }
     
     int columns = _tilesetTexture.getSize().x / _tileWidth;
     int rows = _tilesetTexture.getSize().y / _tileHeigth;
     
-    for(int l=0; l<_numLayers; l++){
+    for(int l=0; l<2; l++){
         for(int y=0; y<_height; y++){
             for(int x=0; x<_width;x++){
                 int gid=_tilemap[l][y][x]-1;
                 if(gid>=rows*columns){ }
                 else if(gid>0){   
-                    if(gid == 1 || gid==2 || gid==3){}
+                    if(gid == 1 || gid==2 || gid==3){
+                        _tilemap[1][y][x]=0;
+                       _tilemapSprite[h][1][y][x]->setPosition(x*_tileWidth+(ancho*(20*_width)),y*_tileHeigth+(alto*(20*_height)));
+
+                    }
                     else {
                     _tilemapSprite[h][l][y][x]=new sf::Sprite(_tilesetTexture,_tilesetSprite[gid].getTextureRect());
+                    _tilemapSprite[h][l][y][x]->setPosition(x*_tileWidth+(ancho*(20*_width)),y*_tileHeigth+(alto*(20*_height)));
                     }
                 }
                 else{
@@ -229,22 +232,31 @@ void Mapa::setPosition(int h, int ancho, int alto) {
             }
         }
     }
-    for(int l=0; l<_numLayers; l++){
-        for(int y=0; y<_height; y++){
-            for(int x=0; x<_width;x++){
-                int gid=_tilemap[l][y][x]-1;
-                if(gid>=rows*columns){
-
-                }
-                else if(gid>0){   
-                    _tilemapSprite[h][l][y][x]->setPosition(x*_tileWidth+(ancho*(20*_width)),y*_tileHeigth+(alto*(20*_height)));
-                }
-                else{
-                    _tilemapSprite[h][l][y][x]=NULL;
+    for(int l=2; l<_numLayers; l++){
+            for(int y=0; y<_height; y++){
+                for(int x=0; x<_width;x++){
+                    int gid=_tilemap[l][y][x]-1;
+                    if(gid>=rows*columns){ }
+                    else if(gid>0 && puer[l-2]==1){ 
+                        _tilemapSprite[h][l][y][x]=new sf::Sprite(_tilesetTexture,_tilesetSprite[gid].getTextureRect());
+                        _tilemapSprite[h][l][y][x]->setPosition(x*_tileWidth+(ancho*(20*_width)),y*_tileHeigth+(alto*(20*_height)));
+                    }
+                    else{
+                        _tilemapSprite[h][l][y][x]=NULL;
+                    }
                 }
             }
         }
-    }
+      
+        for(int l=2; l<_numLayers; l++){
+            for(int y=0; y<_height; y++){
+                        for(int x=0; x<_width;x++){
+                            if((_tilemap[l][y][x]-1)>0 && puer[l-2]==1){
+                                _tiles[h][l][y][x]=1;
+                            }
+                        }
+                    }        
+        }
 }
 /*
     bool mapa::devolverColision(int posX, int posY){

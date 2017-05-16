@@ -33,18 +33,22 @@ public:
     int _height;
     int _tileWidth;
     int activeLayer;
+    int ***_tilemap;
+    int ****_tiles;
+    int _numLayers;
     int getWidth();
     int getAnchoT();
     int getAltoT();
     int getHeight();
     void setActiveLayer(int layer);
-    void setPosition(int h, int ancho, int alto);
+    void setPosition(int puer[], int h, int ancho, int alto);
+    sf::Sprite *****_tilemapSprite;
     //bool devolverColision(int posX, int posY);
     
 private:
 
-    int ***_tilemap;
-    int _numLayers;
+    
+    
     int _numObject;
     int _tileHeigth;
     
@@ -54,7 +58,6 @@ private:
     int _yCollider;
     int _rotCollider;
     
-    sf::Sprite *****_tilemapSprite;
     sf::Sprite *_tilesetSprite;
     sf::Sprite *_tilesetSpriteobj;
     sf::Sprite te;

@@ -79,6 +79,20 @@ void Planta::compruebahabitacion (int x, int y, vector<Coordenada*>* vect){
         vect->push_back(new Coordenada (x, y+1));           
 }
 
+int Planta::CompruebaValor(int x, int y){
+    if(x>=0 && x<NHab && y>=0 && y<NHab){
+        if(matriz[x][y] != 0 && matriz[x][y]!=3){
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    else {
+        return 0;
+    }
+}
+
 void Planta::creahabitacion (int& h, queue<Coordenada*> a){
     if(!a.empty() && h>0){       
         int r= -1;

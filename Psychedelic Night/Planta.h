@@ -30,6 +30,7 @@ public:
     int getTam();
     //void rellenarMatriz(int mat[NHab][NHab]);
     int** getMatriz();
+    int CompruebaValor(int x, int y);
 private:
     int NHab;
     int NHabitaciones;

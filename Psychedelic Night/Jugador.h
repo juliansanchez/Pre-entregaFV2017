@@ -59,6 +59,13 @@ public:
     void pintarbalas();
     void situar(int x, int y);
     vector<Bala*>* getMunicion();
+    bool getFlagA ();
+    bool getFlagW ();
+    bool getFlagS ();
+    bool getFlagD ();
+    void setX(int pos);
+    void setY(int pos);
+    float SPRITE_SPEED;
     
         
 private:
@@ -83,7 +90,6 @@ private:
     bool rightFlag;
     
     // ATRIBUTOS
-    float SPRITE_SPEED;
     int numBombas;
     float vida;
     float vidaActual;

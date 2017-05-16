@@ -98,11 +98,16 @@ void Nivel::crearMapa(){
     mapa->leerMapa(p);
     int c = 0;
     int** matriz = pl->getMatriz();
-    
+    int puer[4];
     for (int i = 0; i<pl->getTam(); i++){
         for (int j = 0; j<pl->getTam(); j++){
             if (matriz[i][j] == 1 || matriz[i][j] == 2 || matriz[i][j] == 4 || matriz[i][j] == 5){
-                mapa->setPosition(c, j, i);
+                puer[0]=pl->CompruebaValor(i-1,j);
+                puer[1]=pl->CompruebaValor(i,j-1);
+                puer[2]=pl->CompruebaValor(i+1,j);
+                puer[3]=pl->CompruebaValor(i,j+1);
+                cout << puer[0] << puer[1] << puer[2] << puer[3] << endl;
+                mapa->setPosition(puer,c, j, i);
                 c++;
             }
             if (matriz[i][j] == 1){
@@ -314,6 +319,42 @@ void Nivel::colisionEntreNPC(){
              }
         }   
     }
+}
+
+bool Nivel::colision(int x, int y) {
+    bool devol=false;
+    x=(x%780)/20;
+    y=(y%460)/20;
+    if(y>18) y = 22;
+    //cout << x << y << endl;
+    int num = this->obtenerHab()-1;
+    for(int i=2;i<6;i++){
+        if(this->mapa->_tiles[num][i][y][x]==1){
+                //cout<<"entroooooooooo"<<endl;
+                devol=true;
+        }
+    }
+    
+    if (devol==false && this->mapa->_tilemap[1][y][x] != 0) {
+            devol = true;
+    }
+    return devol;
+}
+
+int Nivel::obtenerHab(){
+    int num=0;
+    int** matriz = pl->getMatriz();
+    for (int i = 0; i<pl->getTam(); i++){
+        for (int j = 0; j<pl->getTam(); j++){
+            if(matriz[i][j]!=0 && matriz[i][j]!= 3){
+                num++;
+                if(i==posx && j==posy){
+                    return num;
+                }
+            }
+        }
+    }
+    return num;
 }
 
 bool **Nivel::getVisitadas(){

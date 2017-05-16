@@ -322,3 +322,10 @@ vector<Bala*>* Jugador::getMunicion(){
 
     return balas;
 }
+
+bool Jugador::getFlagA() { return leftFlag;}
+bool Jugador::getFlagW() { return upFlag;}
+bool Jugador::getFlagS() { return downFlag;}
+bool Jugador::getFlagD() { return rightFlag;}
+void Jugador::setX(int pos) {x = pos;}
+void Jugador::setY(int pos) {y = pos;}

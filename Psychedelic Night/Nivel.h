@@ -45,6 +45,8 @@ public:
     void colisionEntreNPC();
     void colisionBalasBoss();
     int** getMatriz();
+    bool colision(int x, int y);
+    int obtenerHab();
 private:
     int n; //Nivel
     string semilla;
