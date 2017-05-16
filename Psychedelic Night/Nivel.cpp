@@ -200,9 +200,12 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
             vectorenemigos->at(i)->colisionBalasPersonaje();
         }
     }
-    if (boss!=NULL && boss->getPosMatrix_x() == posx && boss->getPosMatrix_y() == posy)
+    if (boss!=NULL && boss->getPosMatrix_x() == posx && boss->getPosMatrix_y() == posy){
         boss->movBoss(cl,tim);
-    else{
+        boss->colisionBalasBoss();
+        boss->colisionBoss();
+        this->colisionBalasBoss();
+    }else{
          //IF que compruebe la colision del jugador con el sprite trampilla
     }
     
@@ -242,6 +245,33 @@ void Nivel::colisionBalasEnemigo(){
             }                          
         }
       }   
+   }
+}
+
+void Nivel::colisionBalasBoss(){
+
+  EstadoJugando* estandoJugando= EstadoJugando::Instance();
+
+  for(int i = 0 ; i<estandoJugando->getPersonaje()->getMunicion()->size(); i++){
+      
+      if(boss!=NULL){
+            if (boss->getPosMatrix_x() == posx && boss->getPosMatrix_y() == posy){
+
+
+                if((boss->getX()+boss->getAnchoSprite()) > (estandoJugando->getPersonaje()->getMunicion()->at(i)->getX())&&  
+                    (boss->getY()+boss->getAltoSprite()) > (estandoJugando->getPersonaje()->getMunicion()->at(i)->getY())&&
+                    (estandoJugando->getPersonaje()->getMunicion()->at(i)->getX()+16)> (boss->getX()) &&
+                    (estandoJugando->getPersonaje()->getMunicion()->at(i)->getY()+16)> (boss->getY())){
+
+                    estandoJugando->getPersonaje()->getMunicion()->at(i)->golpea(); 
+                    boss->quitarVida(estandoJugando->getPersonaje()->getDanyo());
+                    if(boss->getVida()<=0){
+                        delete boss;
+                        boss=NULL;
+                    }
+                }                          
+            }
+        }        
    }
 }
 

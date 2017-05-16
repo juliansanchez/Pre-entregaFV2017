@@ -31,6 +31,9 @@ Boss::Boss(int posX, int posY) {
     SpriteGame c1(*textura3,89,152,9,60);
     SpriteGame c2(*textura3,6,73,9,60);
     SpriteGame c3(*textura3,86,155,71,125);
+    
+    ancho=c.getAncho()*2;
+    alto=c.getAlto()*2;
 
     this->enemigo=new Sprite*[4];
     for(int i=0; i<4;i++){
@@ -58,6 +61,8 @@ Boss::Boss(int posX, int posY) {
     bicho=new std::vector<NPC*>;
     int initX =posMatrix_x*39*20 + 39*20/2 ;
     int initY =posMatrix_y*23*20 + 23*20/2 ;
+    cont_colision=0;
+    colision=false;
     for(int i=0;i<num_sprites;i++){
         this->enemigo[i]->setPosition(initX,initY);
     } 
@@ -227,4 +232,59 @@ void Boss::ActualizarDisparo(){
             }
         }
 
+}
+
+
+void Boss::colisionBoss(){
+    
+     EstadoJugando* estandoJugando= EstadoJugando::Instance();
+
+    if(tipo !=2){ 
+        if((estandoJugando->getPersonaje()->getX()+32) > (this->getX())&&  
+                (estandoJugando->getPersonaje()->getY()+42) > (this->getY()) &&
+                (this->getX()+this->enemigo[cambio_sprite]->getTextureRect().width)> (estandoJugando->getPersonaje()->getX()) &&
+                (this->getY()+this->enemigo[cambio_sprite]->getTextureRect().height)> (estandoJugando->getPersonaje()->getY())){
+
+            if(!colision){
+                estandoJugando->getPersonaje()->quitarVida();
+                colision=true;
+
+            }else{
+                if(cont_colision>25){
+                    cont_colision=25; 
+                }
+                if(cont_colision==25){
+                    colision=false;
+                    cont_colision=0;
+                }
+            }
+        }
+    }
+    if(colision){
+      cont_colision++;
+     }
+     
+}
+
+void Boss::colisionBalasBoss(){
+    
+    EstadoJugando* estandoJugando= EstadoJugando::Instance();
+       
+    for(int i = 0 ; i<balas->size(); i++){
+        if(balas->at(i)){
+            
+            if((estandoJugando->getPersonaje()->getX()+32) > (balas->at(i)->getX())&&  
+                (estandoJugando->getPersonaje()->getY()+42) > (balas->at(i)->getY()) &&
+                (balas->at(i)->getX()+16)> (estandoJugando->getPersonaje()->getX()) &&
+                (balas->at(i)->getY()+16)> (estandoJugando->getPersonaje()->getY())){
+                estandoJugando->getPersonaje()->quitarVida();
+                balas->at(i)->golpea();
+            }     
+        }
+    }    
+}
+
+void Boss::quitarVida(int herida){
+
+    vida=vida-herida;
 }

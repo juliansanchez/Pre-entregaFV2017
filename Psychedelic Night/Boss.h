@@ -39,14 +39,16 @@ public:
     void movBoss(Clock clock2,Time tiempo);
     void DisparoEnemigo(Clock clockbala);
     void ActualizarDisparo();
-
+    void colisionBoss();
+    void colisionBalasBoss();
     void pintarDisparo();
-
-
     int getPosMatrix_x();
     int getPosMatrix_y();
     void quitarVida();
     float getVida(){return vida;};
+    int getAnchoSprite(){return ancho;};
+    int getAltoSprite(){return alto;};
+    void quitarVida(int herida);
 private:
     int tipo;
     int vida;
@@ -71,6 +73,11 @@ private:
     int posMatrix_y;
     
     int contador_vueltas;
+    bool colision;
+    int cont_colision;
+    
+    float ancho;
+    float alto;
 
 };
 
