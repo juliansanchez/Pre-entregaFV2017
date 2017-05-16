@@ -29,6 +29,8 @@ void EstadoPausa::Init(){
     rec.setFillColor(sf::Color(0,0,0, 200));
 }
 
+void EstadoPausa::Init(unsigned int sem){}
+
 void EstadoPausa::Limpiar(){
     delete paus;
     printf("Limpieza EstadoPausa\n");

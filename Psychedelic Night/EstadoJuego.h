@@ -19,6 +19,7 @@
 class EstadoJuego {
 public:
     virtual void Init() = 0;
+    virtual void Init(unsigned int sem) = 0;
     virtual void Limpiar() = 0;
     virtual void Pausar() = 0;
     virtual void Continuar() = 0;

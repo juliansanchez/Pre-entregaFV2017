@@ -85,3 +85,12 @@ void MotorJuego::Reiniciar(EstadoJuego* estado){
     estados.push_back(estado);
     estados.back()->Init();
 }
+
+void MotorJuego::Reiniciar(EstadoJuego* estado, unsigned int sem){
+    while (!estados.empty()){
+	estados.back()->Limpiar();
+	estados.pop_back();
+    }
+    estados.push_back(estado);
+    estados.back()->Init(sem);
+}

@@ -58,12 +58,14 @@ Nivel::Nivel(unsigned int sem){
     pl = new Planta(n+5);
     posx = (n+5)/2;
     posy = (n+5)/2;
+    visitadas = new bool*[n+5];
     for (int i = 0; i<n+5; i++){
         visitadas[i] = new bool [n+5];
         for (int j = 0; j<n+5; j++)
             visitadas[i][j] = false;        
     }
-    crearMapa();   
+    crearMapa(); 
+                
 }
 
 Nivel::Nivel(const Nivel& orig) {
@@ -171,6 +173,7 @@ void Nivel::aumentanivel(){
         for (int j = 0; j<n+5; j++)
             visitadas[i][j] = false;        
     }
+    visitar(posx, posy);
     Vistas* g = Vistas::Instance();
     g->centrarGeneral(n);
 }

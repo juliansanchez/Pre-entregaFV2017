@@ -31,7 +31,9 @@ public:
     void Draw();
     void MoveUp();
     void MoveDown();
+    void anyadiraSemilla(int a);
     int GetPressedItem(){return selecionarItem;}
+    unsigned int getSemilla (){return semilla;}
 private:
     int selecionarItem;
     Font fuente;
@@ -40,6 +42,8 @@ private:
     Sprite *dibujo;
     bool act;
     unsigned int semilla;
+    sf::Text text4;
+    sf::Text text5;
 };
 
 #endif /* MENU_H */

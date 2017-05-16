@@ -20,6 +20,7 @@
 class EstadoIntro : public EstadoJuego{
 public:
     void Init();
+    void Init(unsigned int sem);
     void Limpiar();
     void Pausar();
     void Continuar();

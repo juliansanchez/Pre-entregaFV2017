@@ -34,6 +34,7 @@ public:
     sf::RenderWindow* ventana;
     int getTam();
     void Reiniciar(EstadoJuego* estado);
+    void Reiniciar(EstadoJuego* estado, unsigned int sem);
 
 private:
     vector<EstadoJuego*> estados;

@@ -37,6 +37,8 @@ void EstadoIntro::Init(){
     printf("EstadoIntro iniciado\n");
 }
 
+void EstadoIntro::Init(unsigned int sem){}
+
 void EstadoIntro::Limpiar(){
     delete menu;
     printf("Limpieza EstadoIntro\n");
@@ -72,7 +74,10 @@ void EstadoIntro::ManejarEventos(MotorJuego* juego){
                     aceptar.play();
                     switch (menu->GetPressedItem()){
                         case 0:
-                            juego->Reiniciar(EstadoJugando::Instance());
+                            if (menu->getSemilla()==0)
+                                juego->Reiniciar(EstadoJugando::Instance());
+                            else 
+                                juego->Reiniciar(EstadoJugando::Instance(), menu->getSemilla());
                         break;
                         case 1:
                             //OPCIONES                            
@@ -85,9 +90,35 @@ void EstadoIntro::ManejarEventos(MotorJuego* juego){
                     }
                 break;
                 case sf::Keyboard::Num0:
-                    
-                    break;
-                    
+                    menu->anyadiraSemilla(0);
+                break;
+                case sf::Keyboard::Num1:
+                    menu->anyadiraSemilla(1);
+                break;
+                case sf::Keyboard::Num2:
+                    menu->anyadiraSemilla(2);
+                break;
+                case sf::Keyboard::Num3:
+                    menu->anyadiraSemilla(3);
+                break;
+                case sf::Keyboard::Num4:
+                    menu->anyadiraSemilla(4);
+                break;
+                case sf::Keyboard::Num5:
+                    menu->anyadiraSemilla(5);
+                break;
+                case sf::Keyboard::Num6:
+                    menu->anyadiraSemilla(6);
+                break;
+                case sf::Keyboard::Num7:
+                    menu->anyadiraSemilla(7);
+                break;
+                case sf::Keyboard::Num8:
+                    menu->anyadiraSemilla(8);
+                break;
+                case sf::Keyboard::Num9:
+                    menu->anyadiraSemilla(9);
+                break;                   
             }           
         }		
     }
