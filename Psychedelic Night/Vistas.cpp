@@ -24,6 +24,7 @@ Vistas::Vistas() {
     contador = 0;
     movx = 0;
     movy = 0;
+    zoom = false;
 }
 
 Vistas::Vistas(const Vistas& orig) {
@@ -67,3 +68,7 @@ bool Vistas::getEstado(){
         return false;
 }
 
+void Vistas::setZoom(){
+    if (!zoom){ general.zoom(5.f); zoom = true;}
+    else{ general.zoom(0.2); zoom = false;}
+}

@@ -24,6 +24,7 @@ public:
     void moverVista(int x, int y);
     void actualizarVista();
     bool getEstado();
+    void setZoom();
 private:
     Vistas();
     Vistas(const Vistas& orig);
@@ -31,6 +32,7 @@ private:
     int contador;
     int movx;
     int movy;
+    bool zoom;
     
     static Vistas *instanciaVistas;
 };

@@ -106,6 +106,13 @@ Jugador::~Jugador() {
     delete texture;
 }
 
+void Jugador::situar(int x, int y){
+    this->x = x;
+    this->y = y;
+   cabeza->setPosition(x, y);
+   piernas->setPosition(x, y+radioSprite); 
+}
+
 void Jugador::animacioncaminar(sf::Clock relojSprite){
     if(relojSprite.getElapsedTime().asSeconds()> .1 && (upFlag==true || downFlag==true || leftFlag==true || rightFlag==true)){
         contadorPasos++;

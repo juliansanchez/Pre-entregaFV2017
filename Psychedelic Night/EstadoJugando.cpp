@@ -91,7 +91,8 @@ void EstadoJugando::ManejarEventos(MotorJuego* juego){
                     case sf::Keyboard::Z: if (!minimap) minimap = true; else minimap = false; break;
                     case sf::Keyboard::X: personaje->aumentarVidaActual(); break;
                     case sf::Keyboard::B: juego->Reiniciar(EstadoJugando::Instance()); break;
-                    case sf::Keyboard::N: niveles->aumentanivel(); break;
+                    //case sf::Keyboard::N: niveles->aumentanivel(); break;
+                    case sf::Keyboard::C: general->setZoom(); break;
                 }           
             }
             if (event.type == sf::Event::KeyReleased){
@@ -151,10 +152,6 @@ void EstadoJugando::Dibujar(MotorJuego* juego){
     niveles->dibujarNivel();
     personaje->pintarbalas();
     personaje->pintar();
-    
-    
-    
-    
     HUD* hud = HUD::Instance();
     juego->ventana->setView(hud->getHUD());
     hud->dibujar();

@@ -57,6 +57,7 @@ public:
     void aumentarVidaActual();
     void pintar();
     void pintarbalas();
+    void situar(int x, int y);
     vector<Bala*>* getMunicion();
     
         

@@ -78,8 +78,11 @@ Nivel::~Nivel() {
     } 
     vectorenemigos->clear();
     delete vectorenemigos;
-    delete tesoro;
-    delete boss;
+    delete trampilla;
+    if (tesoro!=NULL)
+        delete tesoro;
+    if (boss!=NULL)
+        delete boss;
     for (int i = 0; i<n+5; i++){
         delete[] visitadas[i];
     }
@@ -156,8 +159,11 @@ void Nivel::aumentanivel(){
     } 
     vectorenemigos->clear();
     delete vectorenemigos;
-    delete tesoro;
-    delete boss;
+    if (tesoro!=NULL)
+        delete tesoro;
+    delete trampilla;
+    if (boss!=NULL)
+        delete boss;
     for (int i = 0; i<n+5; i++){
         delete[] visitadas[i];
     }
@@ -169,7 +175,9 @@ void Nivel::aumentanivel(){
     pl = new Planta (n+5);
     posx = (n+5)/2;
     posy = (n+5)/2;
+    EstadoJugando *estjue = EstadoJugando::Instance();
     crearMapa();
+    estjue->getPersonaje()->situar(39*20*(n/2)+ 39*20/2, 23*20*(n/2)+ 23*20/2);
     visitadas = new bool*[n+5];
     for (int i = 0; i<n+5; i++){
         visitadas[i] = new bool [n+5];
@@ -214,9 +222,7 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
                 (trampilla->getPosition().y+trampilla->getTextureRect().height) > (estandoJugando->getPersonaje()->getY())&&
                 (estandoJugando->getPersonaje()->getX()+16)> (trampilla->getPosition().x) &&
                 (estandoJugando->getPersonaje()->getY()+16)> (trampilla->getPosition().y)){
-
-                    delete trampilla;
-                    trampilla=NULL;   
+                    //aumentanivel();  
             } 
         }
     }
