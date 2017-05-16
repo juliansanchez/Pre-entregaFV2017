@@ -145,15 +145,17 @@ void Boss::movBoss(Clock clock2, Time tiempo){
 
     
     if(contador_vueltas%this->numCambio==0){
-        cambio_sprite=(cambio_sprite+1)%(this->num_sprites-2);
+        
         
         if(retraso3<15){
             for(int i=0; i<4;i++){
                 this->enemigo[i]->move(signox*16,signoy*16);
+                cambio_sprite=(cambio_sprite+1)%(this->num_sprites-2);
             }
         }else{
             for(int i=0; i<4;i++){
                 this->enemigo[i]->move(-distancia_x/5,-distancia_y/5);
+                cambio_sprite=2;
 
             }
             if(retraso3>20){
