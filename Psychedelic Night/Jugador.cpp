@@ -281,23 +281,21 @@ int Jugador::getY(){
     return y;
 }
 
-void Jugador:: anyadirBomba(){
-    numBombas++;
-}
 
-void Jugador:: ponerBomba(){
+
+bool Jugador:: ponerBomba(){
     if(numBombas > 0){
-        Modificador *bomba = new Modificador(x,y+40,clock);
-        bomba->pintar();
-        numBombas--;
-       
+        cout<<"Entro y no peta pero la bomba se debe crear en nivel"<<endl;
+        numBombas--;  
+        return true;
     }
 }
 
 // incrementa velocidad del jugador
 void Jugador:: aumentarDanyo(){
     danyo++; 
-    cabeza->setColor(sf::Color::Green);
+    cabeza->setColor(sf::Color(210,101,150,255));
+    piernas->setColor(sf::Color(210,101,150,255));
 }
 void Jugador:: aumentarVidaActual(){
     vidaActual = vidaActual+1;

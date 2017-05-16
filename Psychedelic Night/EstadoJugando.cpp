@@ -139,6 +139,7 @@ void EstadoJugando::Actualizar(MotorJuego* juego){
         personaje->disparar();
         tiempo = clock2.restart();
         niveles->actualizar(clock2, tiempo);
+        
     }
 }
 
@@ -150,6 +151,10 @@ void EstadoJugando::Dibujar(MotorJuego* juego){
     niveles->dibujarNivel();
     personaje->pintarbalas();
     personaje->pintar();
+    
+    
+    
+    
     HUD* hud = HUD::Instance();
     juego->ventana->setView(hud->getHUD());
     hud->dibujar();

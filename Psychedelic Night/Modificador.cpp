@@ -122,19 +122,3 @@ void Modificador::colisionObjeto(Jugador *j){
     }
 }
 
-// colisiones con volumenes Bounding
-void Modificador::cogerBomba(Jugador *j){
-    
-    if(!colision && (j->getX()+ 32) > this->x && (j->getY()+ 42) > this->y &&
-            (this->x +32)> j->getX() && (this->y+32) > j->getY()){
-            cout<<"Cojo la bomba"<<endl;
-            colision=true;
-                       
-            j->anyadirBomba();
-            // Esto es una chapuza, hay que eliminar el objeto
-            modificador->setTextureRect(sf:: IntRect(0*tamSprite, 0*tamSprite, 0, 0)); 
-            modificador->setPosition(0, 0);
-     
-    }
-
-}

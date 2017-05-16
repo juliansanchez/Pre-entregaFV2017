@@ -32,7 +32,7 @@ public:
     void Modificacion(Jugador* j);
     void pintar();
     void colisionObjeto(Jugador *j);
-    void cogerBomba(Jugador *j);
+
     
     
 private:

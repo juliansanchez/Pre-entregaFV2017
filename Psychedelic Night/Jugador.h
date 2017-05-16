@@ -48,8 +48,7 @@ public:
     int getY();
     int getX();
     void aumentarDanyo();
-    void anyadirBomba();
-    void ponerBomba();
+    bool ponerBomba();
     void aumentarVida();
     void quitarVida();
     float getVida(){return vida;};
