@@ -41,6 +41,7 @@ public:
     void ActualizarDisparo();
     void colisionBoss();
     void colisionBalasBoss();
+    void colisionBalasEnemigo();
     void pintarDisparo();
     int getPosMatrix_x();
     int getPosMatrix_y();

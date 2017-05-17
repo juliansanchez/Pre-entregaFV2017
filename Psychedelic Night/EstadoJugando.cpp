@@ -138,9 +138,15 @@ void EstadoJugando::Actualizar(MotorJuego* juego){
         if (personaje->getFlagW()){ y = y-velocidad;}
         if (personaje->getFlagD()){ x = x+velocidad;}
         if (personaje->getFlagS()){ y = y+velocidad;}
+<<<<<<< Updated upstream
         if (!niveles->colision(x, y)){
             personaje->setX(x);
             personaje->setY(y);*/
+
+        //if (!niveles->colision(x, y)){
+            //personaje->setX(x);
+            //personaje->setY(y);
+
             personaje->mover(relojSprite);
         //}
         personaje->disparar();

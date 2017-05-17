@@ -333,7 +333,7 @@ bool Nivel::colision(int x, int y) {
                 devol=true;
         }
     }
-    
+    //cambio 1 a num ???
     if (devol==false && this->mapa->_tilemap[1][y][x] != 0) {
             devol = true;
     }
