@@ -34,22 +34,18 @@ void EstadoIntro::Init(){
     }   
     aceptar.setBuffer(efecto_click);    
     pasar.setBuffer(efecto_paso);
-    printf("EstadoIntro iniciado\n");
 }
 
 void EstadoIntro::Init(unsigned int sem){}
 
 void EstadoIntro::Limpiar(){
     delete menu;
-    printf("Limpieza EstadoIntro\n");
 }
 
 void EstadoIntro::Pausar(){
-    printf("Pausa EstadoIntro\n");
 }
 
 void EstadoIntro::Continuar(){
-    printf("Continuar EstadoIntro");
 }
 
 void EstadoIntro::ManejarEventos(MotorJuego* juego){

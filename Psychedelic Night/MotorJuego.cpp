@@ -24,7 +24,6 @@ void MotorJuego::Init(const char* titulo, int ancho, int alto, int bpp){
     Motor2D*motor2D = Motor2D::Instance();
     motor2D->setWindow(ventana);
     activo = true;
-    printf("Inicio MotorJuego\n");
 }
 
 void MotorJuego::Limpiar(){
@@ -32,7 +31,6 @@ void MotorJuego::Limpiar(){
 	estados.back()->Limpiar();
 	estados.pop_back();
     }
-    printf("Limpieza MotorJuego\n");
     ventana->close();
 }
 

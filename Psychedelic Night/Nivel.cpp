@@ -106,7 +106,6 @@ void Nivel::crearMapa(){
                 puer[1]=pl->CompruebaValor(i,j-1);
                 puer[2]=pl->CompruebaValor(i+1,j);
                 puer[3]=pl->CompruebaValor(i,j+1);
-                cout << puer[0] << puer[1] << puer[2] << puer[3] << endl;
                 mapa->setPosition(puer,c, j, i);
                 c++;
             }

@@ -10,6 +10,8 @@
  * and open the template in the editor.
  */
 
+#include <SFML/Graphics/Color.hpp>
+
 #include "Mapa.h"
 
 using namespace std;
@@ -190,6 +192,9 @@ void Mapa::leerMapa(int NH){
 }
 
 void Mapa::setPosition(int puer[], int h, int ancho, int alto) {
+    int r1 = (int) 50 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(200)));
+    int r2 = (int) 50 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(200)));
+    int r3 = (int) 50 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(200)));
     int cont = 0;
     while(cont < 15){
         int x = 0 + rand()%(39-4);
@@ -223,6 +228,7 @@ void Mapa::setPosition(int puer[], int h, int ancho, int alto) {
                     }
                     else {
                     _tilemapSprite[h][l][y][x]=new sf::Sprite(_tilesetTexture,_tilesetSprite[gid].getTextureRect());
+                    _tilemapSprite[h][l][y][x]->setColor(sf::Color(r1, r2, r3));
                     _tilemapSprite[h][l][y][x]->setPosition(x*_tileWidth+(ancho*(20*_width)),y*_tileHeigth+(alto*(20*_height)));
                     }
                 }

@@ -25,7 +25,6 @@ EstadoPausa EstadoPausa::estpausa;
 
 void EstadoPausa::Init(){
     paus = new Pausa(900, 540);
-    printf("EstadoPausa Init\n");
     rec.setFillColor(sf::Color(0,0,0, 200));
 }
 
@@ -33,15 +32,12 @@ void EstadoPausa::Init(unsigned int sem){}
 
 void EstadoPausa::Limpiar(){
     delete paus;
-    printf("Limpieza EstadoPausa\n");
 }
 
 void EstadoPausa::Pausar(){
-    printf("Pausa EstadoPausa\n");
 }
 
-void EstadoPausa::Continuar(){
-    printf("Continuar EstadoPausa\n");
+void EstadoPausa::Continuar(){;
 }
 
 void EstadoPausa::ManejarEventos(MotorJuego* juego){

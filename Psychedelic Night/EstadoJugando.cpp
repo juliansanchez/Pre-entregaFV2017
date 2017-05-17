@@ -33,7 +33,6 @@ void EstadoJugando::Init(){
     minimap=false;
     relojSprite.restart();
     timeStartUpdate =clock1.getElapsedTime();
-    printf("EstadoJugando iniciado\n");
 }
 
 void EstadoJugando::Init(unsigned int s){
@@ -47,7 +46,6 @@ void EstadoJugando::Init(unsigned int s){
     minimap=false;
     relojSprite.restart();
     timeStartUpdate =clock1.getElapsedTime();
-    printf("EstadoJugando Semilla iniciado\n");
 }
 
 void EstadoJugando::Limpiar(){
@@ -55,15 +53,12 @@ void EstadoJugando::Limpiar(){
         delete niveles;
     if (personaje!=NULL)
         delete personaje; 
-    printf("Limpieza EstadoJugando\n");
 }
 
 void EstadoJugando::Pausar(){
-    printf("Pausa EstadoJugando\n");
 }
 
 void EstadoJugando::Continuar(){
-    printf("Continuar EstadoJugando\n");
 }
 
 void EstadoJugando::ManejarEventos(MotorJuego* juego){
