@@ -211,6 +211,7 @@ void Boss::movBoss(Clock clock2, Time tiempo){
         retraso2++;
     } 
     this->ActualizarDisparo();
+    this->colisionBalasEnemigo();
     for(int i = 0 ; i<bicho->size(); i++){
         if(bicho->at(i)){
             bicho->at(i)->nextSprite(contador_vueltas); 
@@ -218,6 +219,31 @@ void Boss::movBoss(Clock clock2, Time tiempo){
         }   
     }
     contador_vueltas++;
+}
+
+
+void Boss::colisionBalasEnemigo(){
+
+  EstadoJugando* estandoJugando= EstadoJugando::Instance();
+
+
+  for(int i = 0 ; i<estandoJugando->getPersonaje()->getMunicion()->size(); i++){
+        for (int j = 0; j<bicho->size(); j++){
+         
+            if((bicho->at(j)->getX()+bicho->at(j)->getAnchoSprite()) > (estandoJugando->getPersonaje()->getMunicion()->at(i)->getX())&&  
+                (bicho->at(j)->getY()+bicho->at(j)->getAltoSprite()) > (estandoJugando->getPersonaje()->getMunicion()->at(i)->getY())&&
+                (estandoJugando->getPersonaje()->getMunicion()->at(i)->getX()+16)> (bicho->at(j)->getX()) &&
+                (estandoJugando->getPersonaje()->getMunicion()->at(i)->getY()+16)> (bicho->at(j)->getY())){
+
+                estandoJugando->getPersonaje()->getMunicion()->at(i)->golpea(); 
+                bicho->at(j)->quitarVida(estandoJugando->getPersonaje()->getDanyo());
+                if(bicho->at(j)->getVida()<=0){
+                    delete bicho->at(j);
+                    bicho->erase(bicho->begin() + j);
+                }
+            }                          
+        }   
+    }
 }
 
 
@@ -242,8 +268,8 @@ void Boss::colisionBoss(){
      EstadoJugando* estandoJugando= EstadoJugando::Instance();
 
     if(tipo !=2){ 
-        if((estandoJugando->getPersonaje()->getX()+32) > (this->getX())&&  
-                (estandoJugando->getPersonaje()->getY()+42) > (this->getY()) &&
+        if((estandoJugando->getPersonaje()->getX()+32) > (this->getX()-this->enemigo[cambio_sprite]->getTextureRect().width/2)&&  
+                (estandoJugando->getPersonaje()->getY()+42) > (this->getY()-this->enemigo[cambio_sprite]->getTextureRect().height/2) &&
                 (this->getX()+this->enemigo[cambio_sprite]->getTextureRect().width)> (estandoJugando->getPersonaje()->getX()) &&
                 (this->getY()+this->enemigo[cambio_sprite]->getTextureRect().height)> (estandoJugando->getPersonaje()->getY())){
 
