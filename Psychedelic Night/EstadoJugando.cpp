@@ -136,7 +136,7 @@ void EstadoJugando::Actualizar(MotorJuego* juego){
         if (!general->getEstado())
             general->actualizarVista();
         reloj.restart();
-        int x = personaje->getX();
+        /*int x = personaje->getX();
         int y =  personaje->getY();
         int velocidad = personaje->SPRITE_SPEED;
         if (personaje->getFlagA()){ x = x-velocidad;}
@@ -145,9 +145,9 @@ void EstadoJugando::Actualizar(MotorJuego* juego){
         if (personaje->getFlagS()){ y = y+velocidad;}
         if (!niveles->colision(x, y)){
             personaje->setX(x);
-            personaje->setY(y);
+            personaje->setY(y);*/
             personaje->mover(relojSprite);
-        }
+        //}
         personaje->disparar();
         tiempo = clock2.restart();
         niveles->actualizar(clock2, tiempo);
