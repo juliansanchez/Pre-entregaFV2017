@@ -147,11 +147,11 @@ void EstadoJugando::Actualizar(MotorJuego* juego){
         if (!niveles->colision(x, y)){
             personaje->setX(x);
             personaje->setY(y);*/
-=======
+
         //if (!niveles->colision(x, y)){
             //personaje->setX(x);
             //personaje->setY(y);
->>>>>>> Stashed changes
+
             personaje->mover(relojSprite);
         //}
         personaje->disparar();
