@@ -45,11 +45,14 @@ public:
     void colisionEntreNPC();
     void colisionBalasBoss();
     int** getMatriz();
-    bool colision(int x, int y);
-    int obtenerHab();
+    int colisionPuertas(int x, int y);
+    bool colisionHabitacion(int x, int y);
+    int obtenerHab(int x , int y);
+    bool enemigosVivos();
 private:
     int n; //Nivel
     string semilla;
+    int num;
     Planta *pl;
     Mapa *mapa;
     Modificador *tesoro;
@@ -58,6 +61,7 @@ private:
     void crearMapa();
     int posx; //Posicion del jugador en la matriz de mapas
     int posy;
+    bool cambio;
     vector<NPC*>* vectorenemigos;
     sf::Sprite *trampilla;
     sf::Texture tex;

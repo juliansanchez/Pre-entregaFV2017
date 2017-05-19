@@ -65,7 +65,7 @@ void Minimapa::dibujar(){
                     rectan->setFillColor(sf::Color::White);
                 else
                     rectan->setFillColor(sf::Color(192,192,192));
-                rectan->setPosition(150*(i+1), 75*(j+1));
+                rectan->setPosition(150*(j+1), 75*(i+1));
                 vec->push_back(rectan);
                 motor2D->pintarRectShape(*rectan);
             }

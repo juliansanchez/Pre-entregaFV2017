@@ -10,8 +10,6 @@
  * and open the template in the editor.
  */
 
-#include <SFML/Graphics/Color.hpp>
-
 #include "Mapa.h"
 
 using namespace std;
@@ -205,9 +203,18 @@ void Mapa::setPosition(int puer[], int h, int ancho, int alto) {
             cont = cont + 1;
             if(_tilemap[1][y][x] == 2){
                 _tilemapSprite[h][1][y][x]= new sf::Sprite(fuego);
+                _tiles[h][1][y][x]=1;
+                _tiles[h][1][y-1][x]=1;
+                _tiles[h][1][y-1][x+1]=1;
+                _tiles[h][1][y][x+1]=1;
+                
             }
             else if(_tilemap[1][y][x] == 3){
                 _tilemapSprite[h][1][y][x]=new sf::Sprite(roca);
+                _tiles[h][1][y][x]=1;
+                _tiles[h][1][y-1][x]=1;
+                _tiles[h][1][y-1][x+1]=1;
+                _tiles[h][1][y][x+1]=1;
             }          
         }
     }
@@ -223,6 +230,7 @@ void Mapa::setPosition(int puer[], int h, int ancho, int alto) {
                 else if(gid>0){   
                     if(gid == 1 || gid==2 || gid==3){
                         _tilemap[1][y][x]=0;
+                        
                        _tilemapSprite[h][1][y][x]->setPosition(x*_tileWidth+(ancho*(20*_width)),y*_tileHeigth+(alto*(20*_height)));
 
                     }
@@ -230,6 +238,7 @@ void Mapa::setPosition(int puer[], int h, int ancho, int alto) {
                     _tilemapSprite[h][l][y][x]=new sf::Sprite(_tilesetTexture,_tilesetSprite[gid].getTextureRect());
                     _tilemapSprite[h][l][y][x]->setColor(sf::Color(r1, r2, r3));
                     _tilemapSprite[h][l][y][x]->setPosition(x*_tileWidth+(ancho*(20*_width)),y*_tileHeigth+(alto*(20*_height)));
+                    _tiles[h][l][y][x]=1;
                     }
                 }
                 else{
@@ -245,6 +254,7 @@ void Mapa::setPosition(int puer[], int h, int ancho, int alto) {
                     if(gid>=rows*columns){ }
                     else if(gid>0 && puer[l-2]==1){ 
                         _tilemapSprite[h][l][y][x]=new sf::Sprite(_tilesetTexture,_tilesetSprite[gid].getTextureRect());
+                        _tilemapSprite[h][l][y][x]->setColor(sf::Color(r1, r2, r3));
                         _tilemapSprite[h][l][y][x]->setPosition(x*_tileWidth+(ancho*(20*_width)),y*_tileHeigth+(alto*(20*_height)));
                     }
                     else{

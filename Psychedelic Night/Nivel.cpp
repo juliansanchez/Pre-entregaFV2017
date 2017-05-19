@@ -43,6 +43,8 @@ Nivel::Nivel() {
         for (int j = 0; j<n+5; j++)
             visitadas[i][j] = false;        
     }
+    num=0;
+    cambio=false;
     crearMapa();
 }
 
@@ -64,6 +66,7 @@ Nivel::Nivel(unsigned int sem){
         for (int j = 0; j<n+5; j++)
             visitadas[i][j] = false;        
     }
+    num=0;
     crearMapa(); 
                 
 }
@@ -106,6 +109,7 @@ void Nivel::crearMapa(){
                 puer[1]=pl->CompruebaValor(i,j-1);
                 puer[2]=pl->CompruebaValor(i+1,j);
                 puer[3]=pl->CompruebaValor(i,j+1);
+                cout << puer[0] << puer[1] << puer[2] << puer[3] << endl;
                 mapa->setPosition(puer,c, j, i);
                 c++;
             }
@@ -139,7 +143,7 @@ void Nivel::crearMapa(){
 void Nivel::dibujarNivel(){
     mapa->dibuja(pl->getHabitaciones());
     for (int i = 0; i<vectorenemigos->size(); i++){
-        if (vectorenemigos->at(i)->getPosMatrix_x() == posx && vectorenemigos->at(i)->getPosMatrix_y() == posy){
+        if (vectorenemigos->at(i)->getPosMatrix_x() == posy && vectorenemigos->at(i)->getPosMatrix_y() == posx){
             vectorenemigos->at(i)->pintarDisparo();
             vectorenemigos->at(i)->dibujarEnemigo();
         }
@@ -209,13 +213,13 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
     Motor2D* motor2D = Motor2D::Instance();
     EstadoJugando* estandoJugando= EstadoJugando::Instance();
     for (int i = 0; i<vectorenemigos->size(); i++){
-        if (vectorenemigos->at(i)->getPosMatrix_x() == posx && vectorenemigos->at(i)->getPosMatrix_y() == posy){
+        if (vectorenemigos->at(i)->getPosMatrix_x() == posy && vectorenemigos->at(i)->getPosMatrix_y() == posx){
             vectorenemigos->at(i)->accionesEnemigo(cl, tim);
             vectorenemigos->at(i)->colisionPersonaje();
             vectorenemigos->at(i)->colisionBalasPersonaje();
         }
     }
-    if (boss!=NULL && boss->getPosMatrix_x() == posx && boss->getPosMatrix_y() == posy){
+    if (boss!=NULL && boss->getPosMatrix_x() == posy && boss->getPosMatrix_y() == posx){
         boss->movBoss(cl,tim);
         boss->colisionBalasBoss();
         boss->colisionBoss();
@@ -239,7 +243,7 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
         }
     }
     this->colisionEntreNPC();
-    this->colisionBalasEnemigo();  
+    this->colisionBalasEnemigo();
 }
 
 
@@ -250,7 +254,7 @@ void Nivel::colisionBalasEnemigo(){
 
   for(int i = 0 ; i<estandoJugando->getPersonaje()->getMunicion()->size(); i++){
       for (int j = 0; j<vectorenemigos->size(); j++){
-          if (vectorenemigos->at(j)->getPosMatrix_x() == posx && vectorenemigos->at(j)->getPosMatrix_y() == posy){
+          if (vectorenemigos->at(j)->getPosMatrix_x() == posy && vectorenemigos->at(j)->getPosMatrix_y() == posx){
 
                     
             if((vectorenemigos->at(j)->getX()+vectorenemigos->at(j)->getAnchoSprite()) > (estandoJugando->getPersonaje()->getMunicion()->at(i)->getX())&&  
@@ -277,7 +281,7 @@ void Nivel::colisionBalasBoss(){
   for(int i = 0 ; i<estandoJugando->getPersonaje()->getMunicion()->size(); i++){
       
       if(boss!=NULL){
-            if (boss->getPosMatrix_x() == posx && boss->getPosMatrix_y() == posy){
+            if (boss->getPosMatrix_x() == posy && boss->getPosMatrix_y() == posx){
 
 
                 if((boss->getX()+boss->getAnchoSprite()) > (estandoJugando->getPersonaje()->getMunicion()->at(i)->getX())&&  
@@ -300,8 +304,8 @@ void Nivel::colisionBalasBoss(){
 void Nivel::colisionEntreNPC(){
   for(int i = 0; i<vectorenemigos->size(); i++){
       for (int j = 0; j<vectorenemigos->size(); j++){
-          if (vectorenemigos->at(j)->getPosMatrix_x() == posx && vectorenemigos->at(j)->getPosMatrix_y() == posy){ 
-                if (vectorenemigos->at(i)->getPosMatrix_x() == posx && vectorenemigos->at(i)->getPosMatrix_y() == posy){
+          if (vectorenemigos->at(j)->getPosMatrix_x() == posy && vectorenemigos->at(j)->getPosMatrix_y() == posx){ 
+                if (vectorenemigos->at(i)->getPosMatrix_x() == posy && vectorenemigos->at(i)->getPosMatrix_y() == posx){
                     if (vectorenemigos->at(i)!=NULL && vectorenemigos->at(j)!=NULL){
                         if(i != j){
                             if((vectorenemigos->at(j)->getX()+vectorenemigos->at(j)->getAnchoSprite()) > (vectorenemigos->at(i)->getX())&&  
@@ -320,35 +324,56 @@ void Nivel::colisionEntreNPC(){
     }
 }
 
-bool Nivel::colision(int x, int y) {
+bool Nivel::enemigosVivos(){
+    bool devol = false;
+    for (int i = 0; i<vectorenemigos->size(); i++){
+        if (vectorenemigos->at(i)->getPosMatrix_x() == posy && vectorenemigos->at(i)->getPosMatrix_y() == posx){
+           devol = true;
+        }
+    }
+    return devol;
+}
+
+int Nivel::colisionPuertas(int x, int y) {
+    int devol=0;
+    x=(x%780)/20;
+    y=(y%460)/20;
+    if(y>18) y = 22;
+    num = this->obtenerHab(posx,posy);
+        for(int i=2;i<6;i++){
+            if(this->mapa->_tiles[num][i][y][x]==1){
+                    devol=i;
+            }
+        }
+    return devol;
+}
+
+bool Nivel::colisionHabitacion(int x, int y) {
     bool devol=false;
     x=(x%780)/20;
     y=(y%460)/20;
     if(y>18) y = 22;
     //cout << x << y << endl;
-    int num = this->obtenerHab()-1;
-    for(int i=2;i<6;i++){
-        if(this->mapa->_tiles[num][i][y][x]==1){
-                //cout<<"entroooooooooo"<<endl;
-                devol=true;
-        }
-    }
-    //cambio 1 a num ???
-    if (devol==false && this->mapa->_tilemap[1][y][x] != 0) {
+    
+    num = this->obtenerHab(posx,posy);
+    cout<<x<<" "<<y<<endl;
+    if (this->mapa->_tiles[num][1][y][x] == 1){
             devol = true;
     }
     return devol;
 }
 
-int Nivel::obtenerHab(){
+int Nivel::obtenerHab( int x, int y){
     int num=0;
     int** matriz = pl->getMatriz();
     for (int i = 0; i<pl->getTam(); i++){
         for (int j = 0; j<pl->getTam(); j++){
             if(matriz[i][j]!=0 && matriz[i][j]!= 3){
-                num++;
-                if(i==posx && j==posy){
+                if(i==x && j==y){
                     return num;
+                }
+                else{
+                    num++;
                 }
             }
         }
@@ -361,9 +386,12 @@ bool **Nivel::getVisitadas(){
 }
 
 void Nivel::visitar(int i, int j){
+    cout<<"peddooooo"<<endl;
+    cout<<posx<<" "<<posy<<endl;
     visitadas[i][j] = true;
     setX(i);
     setY(j);
+    cout<<posx<<" "<<posy<<endl;
 }
 
 int Nivel::getX(){

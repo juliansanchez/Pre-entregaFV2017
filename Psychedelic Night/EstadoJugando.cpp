@@ -33,6 +33,7 @@ void EstadoJugando::Init(){
     minimap=false;
     relojSprite.restart();
     timeStartUpdate =clock1.getElapsedTime();
+    printf("EstadoJugando iniciado\n");
 }
 
 void EstadoJugando::Init(unsigned int s){
@@ -46,6 +47,7 @@ void EstadoJugando::Init(unsigned int s){
     minimap=false;
     relojSprite.restart();
     timeStartUpdate =clock1.getElapsedTime();
+    printf("EstadoJugando Semilla iniciado\n");
 }
 
 void EstadoJugando::Limpiar(){
@@ -53,12 +55,15 @@ void EstadoJugando::Limpiar(){
         delete niveles;
     if (personaje!=NULL)
         delete personaje; 
+    printf("Limpieza EstadoJugando\n");
 }
 
 void EstadoJugando::Pausar(){
+    printf("Pausa EstadoJugando\n");
 }
 
 void EstadoJugando::Continuar(){
+    printf("Continuar EstadoJugando\n");
 }
 
 void EstadoJugando::ManejarEventos(MotorJuego* juego){
@@ -103,24 +108,24 @@ void EstadoJugando::ManejarEventos(MotorJuego* juego){
                 }
             }
         }
-        if(general->getEstado()){ //Movimiento vistas segun personaje
-            if (personaje->getX()<niveles->getX()*39*20){
-                general->moverVista(-39*20, 0);
-                niveles->visitar(niveles->getX()-1, niveles->getY());
-            }
-            else if(personaje->getX()>(niveles->getX()+1)*39*20){
-                general->moverVista(39*20, 0); 
-                niveles->visitar(niveles->getX()+1, niveles->getY());
-            }        
-            else if (personaje->getY()<niveles->getY()*23*20){
-                general->moverVista(0, -23*20); 
-                niveles->visitar(niveles->getX(), niveles->getY()-1); 
-            }
-            else if (personaje->getY()>(niveles->getY()+1)*23*20){
-                general->moverVista(0, 23*20); 
-                niveles->visitar(niveles->getX(), niveles->getY()+1); 
-            }        
-        }
+////        if(general->getEstado()){ //Movimiento vistas segun personaje
+////            if (personaje->getX()<niveles->getX()*39*20){
+////                //general->moverVista(-39*20, 0);
+////                //niveles->visitar(niveles->getX()-1, niveles->getY());
+////            }
+////            else if(personaje->getX()>(niveles->getX()+1)*39*20){
+////                general->moverVista(39*20, 0); 
+////                //niveles->visitar(niveles->getX()+1, niveles->getY());
+////            }        
+////            else if (personaje->getY()<niveles->getY()*23*20){
+////                general->moverVista(0, -23*20); 
+////                //niveles->visitar(niveles->getX(), niveles->getY()-1); 
+////            }
+////            else if (personaje->getY()>(niveles->getY()+1)*23*20){
+////                general->moverVista(0, 23*20); 
+////                //niveles->visitar(niveles->getX(), niveles->getY()+1); 
+////            }        
+//        }
     }
 }
 
@@ -131,24 +136,54 @@ void EstadoJugando::Actualizar(MotorJuego* juego){
         if (!general->getEstado())
             general->actualizarVista();
         reloj.restart();
-        /*int x = personaje->getX();
+        int x = personaje->getX();
         int y =  personaje->getY();
         int velocidad = personaje->SPRITE_SPEED;
         if (personaje->getFlagA()){ x = x-velocidad;}
         if (personaje->getFlagW()){ y = y-velocidad;}
         if (personaje->getFlagD()){ x = x+velocidad;}
         if (personaje->getFlagS()){ y = y+velocidad;}
-<<<<<<< Updated upstream
-        if (!niveles->colision(x, y)){
-            personaje->setX(x);
-            personaje->setY(y);*/
-
-        //if (!niveles->colision(x, y)){
-            //personaje->setX(x);
-            //personaje->setY(y);
-
-            personaje->mover(relojSprite);
-        //}
+        int devol = niveles->colisionPuertas(x, y); 
+        if (devol == 0){
+            if(!niveles->colisionHabitacion(x,y)){
+                personaje->mover(relojSprite);
+            }
+        }
+        else {
+            if(!niveles->enemigosVivos()){
+            if(devol==2){
+                //cout<<niveles->getX()<<" "<<niveles->getY()<<endl;
+                general->moverVista(0, (-23*20));
+                y = y - 17*velocidad;
+                personaje->setY(y);
+                niveles->visitar(niveles->getX()-1,niveles->getY());
+            }
+            if(devol==3){
+                //cout<<niveles->getX()<<" "<<niveles->getY()<<endl;
+                general->moverVista(-39*20, 0);
+                x = x - 17*velocidad;
+                personaje->setX(x);
+                niveles->visitar(niveles->getX(),niveles->getY()-1); 
+            }
+            if(devol==4){
+                //cout<<niveles->getX()<<" "<<niveles->getY()<<endl;
+                general->moverVista(0, (23*20));
+                y = y + 17*velocidad;
+                personaje->setY(y); 
+                niveles->visitar(niveles->getX()+1,niveles->getY());
+                
+            }
+            if(devol==5){ 
+                //cout<<niveles->getX()<<" "<<niveles->getY()<<endl;
+                general->moverVista(39*20, 0);
+                x = x + 17*velocidad;
+                personaje->setX(x); 
+                niveles->visitar(niveles->getX(),niveles->getY()+1);
+            }
+            cout << "holaaaaaaaaaaa" <<endl;
+        }
+        }
+            
         personaje->disparar();
         tiempo = clock2.restart();
         niveles->actualizar(clock2, tiempo);
