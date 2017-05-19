@@ -114,8 +114,8 @@ void Nivel::crearMapa(){
                 c++;
             }
             if (matriz[i][j] == 1){
-                int r= 1 + (int) static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/5));
-                for (int q = 0; q<i; q++){
+                int r= 2 + (int) static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/5));
+                for (int q = 0; q<r; q++){
                     int w = (int) static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(3)));
                     vectorenemigos->push_back(new NPC(w, j, i));
                 }

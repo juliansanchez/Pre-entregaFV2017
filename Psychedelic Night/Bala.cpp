@@ -15,6 +15,10 @@
 #include <iostream>
 
 Bala::Bala(int x,int y,int velx, int vely, float rangoDisparo) {
+    
+    int r1 = (int) 50 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(200)));
+    int r2 = (int) 50 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(200)));
+    int r3 = (int) 50 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(200)));
     // posicion de inicio de la bal que coincide con jugador
     posx = x;
     posy = y;
@@ -37,6 +41,7 @@ Bala::Bala(int x,int y,int velx, int vely, float rangoDisparo) {
     // fijar centroide
     sprite->setOrigin(16,16); 
     sprite->setScale(0.5,0.5);
+    sprite->setColor(sf::Color(r1, r2, r3));
     
     this->angle=0;
     this->colisionObjeto=false;
@@ -73,12 +78,37 @@ void Bala::actualiza(){
 
 void Bala::actualiza2(){
     
-    float lenght = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/15));
+    float lenght = 5+static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/17));
+    int tipoDirect = (int) static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(4)));
+    /*
+    if(angle>0){
+        angle=-angle;
+        angle-=0.3;
+    }else{
+       angle=-angle;
+       angle+=0.3;
+        
+    }*/
     
-    angle+=0.1;
-   
+    angle+=0.3;
+    
+    if(tipoDirect==0){
     posx+=velx*cos(angle)+lenght;
-    posy+=vely*sin(angle)+lenght;
+    posy+=vely*sin(angle)+lenght; 
+    }
+    if(tipoDirect==1){
+    posx-=velx*cos(angle)+lenght;
+    posy-=vely*sin(angle)+lenght; 
+    }
+    if(tipoDirect==2){
+    posx-=velx*cos(angle)+lenght;
+    posy+=vely*sin(angle)+lenght; 
+    }
+    if(tipoDirect==3){
+    posx+=velx*cos(angle)+lenght;
+    posy-=vely*sin(angle)+lenght; 
+    }
+   
 
     if(clock.getElapsedTime().asSeconds()< rangoDisparo){
         sprite->setPosition(posx,posy);  

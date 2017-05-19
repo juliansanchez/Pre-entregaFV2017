@@ -52,7 +52,7 @@ Boss::Boss(int posX, int posY) {
     this->numCambio=16;
     this->cambio_sprite=0;   
     this->dispara=0;
-    this->rangoDisparo = 1;
+    this->rangoDisparo = 1.5;
     contador_vueltas=0;
     retraso=0;
     retraso2=7;
@@ -154,7 +154,7 @@ void Boss::movBoss(Clock clock2, Time tiempo){
             }
         }else{
             for(int i=0; i<4;i++){
-                this->enemigo[i]->move(-distancia_x/5,-distancia_y/5);
+                this->enemigo[i]->move(-distancia_x/4,-distancia_y/4);
                 cambio_sprite=2;
 
             }
@@ -164,21 +164,23 @@ void Boss::movBoss(Clock clock2, Time tiempo){
         }
         retraso3++;
         
-        if(retraso==4){
+        if(retraso==2){
             cambio_sprite=2;
+            balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,-distancia_x/12+5,-distancia_y/12,rangoDisparo));
+            balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,-distancia_x/12-5,-distancia_y/12,rangoDisparo));
+            balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,-distancia_x/12,-distancia_y/12,rangoDisparo));
+                
             for(int i=0;i<2;i++){
                     
                 direcx =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/15));
-                direcy =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/15));
+                direcy =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/15)); 
                 
                 balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,signox*direcx,signoy*direcy,rangoDisparo));
                 balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,signoy*direcy,signox* direcx,rangoDisparo));
                 balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,-signox*direcx,-signoy*direcy,rangoDisparo));
                 balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,-signoy*direcy,-signox* direcx,rangoDisparo));
-                balas->push_back(new Bala(enemigo[cambio_sprite]->getPosition().x,enemigo[cambio_sprite]->getPosition().y,-distancia_x/12,-distancia_y/12,rangoDisparo));
-
-              
-                
+         
+             
                 if (signox <0){
                     signox = 1;
                 }else{
@@ -193,12 +195,10 @@ void Boss::movBoss(Clock clock2, Time tiempo){
             }
             retraso=0;
         }
-        if(retraso2==18){
+        if(retraso2==7){
             cambio_sprite=3;
             for(int i=0;i<3;i++){
                 bicho->push_back(new NPC(13,posMatrix_x,posMatrix_y));
-                //posMatrix_x*39*20 + 39*20/2
-                //posMatrix_y*23*20 + 23*20/2
             }
             for(int i = bicho->size()-3 ; i<bicho->size(); i++){
                 if(bicho->at(i)){
