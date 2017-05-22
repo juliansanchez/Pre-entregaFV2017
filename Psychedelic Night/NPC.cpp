@@ -248,8 +248,8 @@ void NPC::movTopo(Time tiempo, int cont_vueltas){
         }
 
         if(retraso==6){
-           x_topo = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/350));
-            y_topo = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/180));
+           x_topo = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/340));
+            y_topo = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/170));
             float signox =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
             float signoy =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
             if (signox >= 0.5)
