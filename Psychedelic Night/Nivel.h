@@ -49,6 +49,7 @@ public:
     bool colisionHabitacion(int x, int y);
     int obtenerHab(int x , int y);
     bool enemigosVivos();
+    void limpiarHab();
 private:
     int n; //Nivel
     string semilla;

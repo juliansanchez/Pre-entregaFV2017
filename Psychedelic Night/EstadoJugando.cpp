@@ -18,6 +18,7 @@
 #include "Vistas.h"
 #include "Minimapa.h"
 #include "HUD.h"
+#include "EstadoMuerte.h"
 #define ktimeupdate 1000/15
 
 EstadoJugando EstadoJugando::estjugando;
@@ -29,11 +30,10 @@ void EstadoJugando::Init(){
     Minimapa* minimapa = Minimapa::Instance();
     HUD* hud = HUD::Instance();
     niveles->visitar(niveles->getX(), niveles->getY());
-    personaje = new Jugador(39*20*3+ 39*20/2, 23*20*3+ 23*20/2);
+    personaje = new Jugador(39*20*(niveles->getNivel()+5/2) + 39*20/2, 23*20*(niveles->getNivel()+5/2) + 23*20/2);
     minimap=false;
     relojSprite.restart();
     timeStartUpdate =clock1.getElapsedTime();
-    printf("EstadoJugando iniciado\n");
 }
 
 void EstadoJugando::Init(unsigned int s){
@@ -47,7 +47,6 @@ void EstadoJugando::Init(unsigned int s){
     minimap=false;
     relojSprite.restart();
     timeStartUpdate =clock1.getElapsedTime();
-    printf("EstadoJugando Semilla iniciado\n");
 }
 
 void EstadoJugando::Limpiar(){
@@ -55,15 +54,12 @@ void EstadoJugando::Limpiar(){
         delete niveles;
     if (personaje!=NULL)
         delete personaje; 
-    printf("Limpieza EstadoJugando\n");
 }
 
 void EstadoJugando::Pausar(){
-    printf("Pausa EstadoJugando\n");
 }
 
 void EstadoJugando::Continuar(){
-    printf("Continuar EstadoJugando\n");
 }
 
 void EstadoJugando::ManejarEventos(MotorJuego* juego){
@@ -82,7 +78,7 @@ void EstadoJugando::ManejarEventos(MotorJuego* juego){
                     case sf::Keyboard::A: personaje->setFlagA(true); break;
                     case sf::Keyboard::S: personaje->setFlagS(true); break;
                     case sf::Keyboard::D: personaje->setFlagD(true); break;
-                    case sf::Keyboard::E: personaje->ponerBomba(); break;
+                    //case sf::Keyboard::E: personaje->ponerBomba(); break;
                     case sf::Keyboard::Up: personaje->setDirDisparo(0); break;
                     case sf::Keyboard::Down: personaje->setDirDisparo(1); break;
                     case sf::Keyboard::Left: personaje->setDirDisparo(2); break;
@@ -91,6 +87,7 @@ void EstadoJugando::ManejarEventos(MotorJuego* juego){
                     case sf::Keyboard::Z: if (!minimap) minimap = true; else minimap = false; break;
                     case sf::Keyboard::X: personaje->aumentarVidaActual(); break;
                     case sf::Keyboard::B: juego->Reiniciar(EstadoJugando::Instance()); break;
+                    case sf::Keyboard::V: niveles->limpiarHab(); break;
                     //case sf::Keyboard::N: niveles->aumentanivel(); break;
                     case sf::Keyboard::C: general->setZoom(); break;
                 }           
@@ -114,6 +111,8 @@ void EstadoJugando::ManejarEventos(MotorJuego* juego){
 
 void EstadoJugando::Actualizar(MotorJuego* juego){
     if(clock1.getElapsedTime().asMilliseconds() - timeStartUpdate.asMilliseconds() > ktimeupdate){
+        if (personaje->getVidaActual() == 0)
+            juego->ApilarEstado(EstadoMuerte::Instance());       
         timeStartUpdate =clock1.getElapsedTime();
         Vistas* general = Vistas::Instance();
         if (!general->getEstado())
@@ -134,38 +133,36 @@ void EstadoJugando::Actualizar(MotorJuego* juego){
         }
         else {
             if(!niveles->enemigosVivos()){
-            if(devol==2){
-                general->moverVista(0, (-23*20));
-                y = y - 17*velocidad;
-                personaje->setY(y);
-                niveles->visitar(niveles->getX()-1,niveles->getY());
+                if(devol==2){
+                    general->moverVista(0, (-23*20));
+                    y = y - 17*velocidad;
+                    personaje->setY(y);
+                    niveles->visitar(niveles->getX()-1,niveles->getY());
+                }
+                else if(devol==3){
+                    general->moverVista(-39*20, 0);
+                    x = x - 17*velocidad;
+                    personaje->setX(x);
+                    niveles->visitar(niveles->getX(),niveles->getY()-1); 
+                }
+                else if(devol==4){
+                    general->moverVista(0, (23*20));
+                    y = y + 17*velocidad;
+                    personaje->setY(y); 
+                    niveles->visitar(niveles->getX()+1,niveles->getY());
+
+                }
+                else if(devol==5){ 
+                    general->moverVista(39*20, 0);
+                    x = x + 17*velocidad;
+                    personaje->setX(x); 
+                    niveles->visitar(niveles->getX(),niveles->getY()+1);
+                }
             }
-            if(devol==3){
-                general->moverVista(-39*20, 0);
-                x = x - 17*velocidad;
-                personaje->setX(x);
-                niveles->visitar(niveles->getX(),niveles->getY()-1); 
-            }
-            if(devol==4){
-                general->moverVista(0, (23*20));
-                y = y + 17*velocidad;
-                personaje->setY(y); 
-                niveles->visitar(niveles->getX()+1,niveles->getY());
-                
-            }
-            if(devol==5){ 
-                general->moverVista(39*20, 0);
-                x = x + 17*velocidad;
-                personaje->setX(x); 
-                niveles->visitar(niveles->getX(),niveles->getY()+1);
-            }
-        }
-        }
-            
+        }           
         personaje->disparar();
         tiempo = clock2.restart();
-        niveles->actualizar(clock2, tiempo);
-        
+        niveles->actualizar(clock2, tiempo);        
     }
 }
 

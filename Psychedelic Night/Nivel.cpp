@@ -67,8 +67,48 @@ Nivel::Nivel(unsigned int sem){
             visitadas[i][j] = false;        
     }
     num=0;
+    cambio=false;
     crearMapa(); 
                 
+}
+
+void Nivel::aumentanivel(){ 
+    while (!vectorenemigos->empty()){
+        delete vectorenemigos->back();
+        vectorenemigos->pop_back();
+    } 
+    vectorenemigos->clear();
+    delete vectorenemigos;
+    if (tesoro!=NULL)
+        delete tesoro;
+    delete trampilla;
+    if (boss!=NULL)
+        delete boss;
+    for (int i = 0; i<n+5; i++){
+        delete[] visitadas[i];
+    }
+    delete[] visitadas; 
+    delete mapa;
+    delete pl;
+    
+    n = n+2;
+    pl = new Planta (n+5);
+    posx = (n+5)/2;
+    posy = (n+5)/2;
+    EstadoJugando *estjue = EstadoJugando::Instance();
+    crearMapa();
+    estjue->getPersonaje()->situar(n);
+    visitadas = new bool*[n+5];
+    for (int i = 0; i<n+5; i++){
+        visitadas[i] = new bool [n+5];
+        for (int j = 0; j<n+5; j++)
+            visitadas[i][j] = false;        
+    }
+    visitar(posx, posy);
+    Vistas* g = Vistas::Instance();
+    g->centrarGeneral(n);
+    num=0;
+    cambio=false;
 }
 
 Nivel::Nivel(const Nivel& orig) {
@@ -159,41 +199,19 @@ void Nivel::dibujarNivel(){
     }
 }
 
-void Nivel::aumentanivel(){ 
-    while (!vectorenemigos->empty()){
-        delete vectorenemigos->back();
-        vectorenemigos->pop_back();
-    } 
-    vectorenemigos->clear();
-    delete vectorenemigos;
-    if (tesoro!=NULL)
-        delete tesoro;
-    delete trampilla;
-    if (boss!=NULL)
+void Nivel::limpiarHab(){
+    int i;
+    for (i = 0; i<vectorenemigos->size(); i++){
+        if (vectorenemigos->at(i)->getPosMatrix_x() == posy && vectorenemigos->at(i)->getPosMatrix_y() == posx){
+            delete vectorenemigos->at(i); 
+            vectorenemigos->erase(vectorenemigos->begin()+i);
+            i--;
+        }
+    }
+    if (boss!=NULL && boss->getPosMatrix_x() == posy && boss->getPosMatrix_y() == posx) {
         delete boss;
-    for (int i = 0; i<n+5; i++){
-        delete[] visitadas[i];
+        boss = NULL;
     }
-    delete[] visitadas; 
-    delete mapa;
-    delete pl;
-    
-    n++;
-    pl = new Planta (n+5);
-    posx = (n+5)/2;
-    posy = (n+5)/2;
-    EstadoJugando *estjue = EstadoJugando::Instance();
-    crearMapa();
-    estjue->getPersonaje()->situar(39*20*(n/2)+ 39*20/2, 23*20*(n/2)+ 23*20/2);
-    visitadas = new bool*[n+5];
-    for (int i = 0; i<n+5; i++){
-        visitadas[i] = new bool [n+5];
-        for (int j = 0; j<n+5; j++)
-            visitadas[i][j] = false;        
-    }
-    visitar(posx, posy);
-    Vistas* g = Vistas::Instance();
-    g->centrarGeneral(n);
 }
 
 string Nivel::getSemilla(){
@@ -229,11 +247,10 @@ void Nivel::actualizar(sf::Clock cl, sf::Time tim){
                 (trampilla->getPosition().y+trampilla->getTextureRect().height) > (estandoJugando->getPersonaje()->getY())&&
                 (estandoJugando->getPersonaje()->getX()+16)> (trampilla->getPosition().x) &&
                 (estandoJugando->getPersonaje()->getY()+16)> (trampilla->getPosition().y)){
-                    //aumentanivel();  
+                    aumentanivel();  
             } 
         }
-    }
-    
+    }   
     if (tesoro!=NULL){
         tesoro->colisionObjeto(estandoJugando->getPersonaje());
         if(tesoro->getColision()){
@@ -323,13 +340,14 @@ void Nivel::colisionEntreNPC(){
 }
 
 bool Nivel::enemigosVivos(){
-    bool devol = false;
     for (int i = 0; i<vectorenemigos->size(); i++){
         if (vectorenemigos->at(i)->getPosMatrix_x() == posy && vectorenemigos->at(i)->getPosMatrix_y() == posx){
-           devol = true;
+           return true;
         }
     }
-    return devol;
+    if (boss!=NULL && boss->getPosMatrix_x() == posy && boss->getPosMatrix_y() == posx) 
+        return true;
+    return false;
 }
 
 int Nivel::colisionPuertas(int x, int y) {

@@ -106,9 +106,9 @@ Jugador::~Jugador() {
     delete texture;
 }
 
-void Jugador::situar(int x, int y){
-    this->x = x;
-    this->y = y;
+void Jugador::situar(int n){
+   this->x = 39*20*(n+5/2)- (n-2)*39*20/2;
+   this->y = 23*20*(n+5/2)- (n-2)*23*20/2;
    cabeza->setPosition(x, y);
    piernas->setPosition(x, y+radioSprite); 
 }

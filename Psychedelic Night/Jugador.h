@@ -57,7 +57,7 @@ public:
     void aumentarVidaActual();
     void pintar();
     void pintarbalas();
-    void situar(int x, int y);
+    void situar(int n);
     vector<Bala*>* getMunicion();
     bool getFlagA ();
     bool getFlagW ();

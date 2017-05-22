@@ -25,7 +25,6 @@ EstadoPausa EstadoPausa::estpausa;
 
 void EstadoPausa::Init(){
     paus = new Pausa(900, 540);
-    printf("EstadoPausa Init\n");
     rec.setFillColor(sf::Color(0,0,0, 200));
 }
 
@@ -33,15 +32,12 @@ void EstadoPausa::Init(unsigned int sem){}
 
 void EstadoPausa::Limpiar(){
     delete paus;
-    printf("Limpieza EstadoPausa\n");
 }
 
 void EstadoPausa::Pausar(){
-    printf("Pausa EstadoPausa\n");
 }
 
 void EstadoPausa::Continuar(){
-    printf("Continuar EstadoPausa\n");
 }
 
 void EstadoPausa::ManejarEventos(MotorJuego* juego){
@@ -65,8 +61,7 @@ void EstadoPausa::ManejarEventos(MotorJuego* juego){
                         case 0:
                             juego->DesapilarEstado(); 
                         break;
-                        case 1:
-                            std::cout<<"has pulsaldo el boton de opciones"<< std::endl;
+                        case 1:                            
                         break;
                         case 2:
                             juego->CambiarEstado(EstadoIntro::Instance());
@@ -89,7 +84,7 @@ void EstadoPausa::Dibujar(MotorJuego* juego) {
     juego->ventana->setView(general->getGeneral());
     estjue->getNiveles()->dibujarNivel();
     estjue->getPersonaje()->pintarbalas();
-     estjue->getPersonaje()->pintar();
+    estjue->getPersonaje()->pintar();
     HUD* hud = HUD::Instance();
     juego->ventana->setView(hud->getHUD());
     hud->dibujar();

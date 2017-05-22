@@ -47,7 +47,7 @@ public:
     
 private:
 
-    
+    int NHAB;
     
     int _numObject;
     int _tileHeigth;

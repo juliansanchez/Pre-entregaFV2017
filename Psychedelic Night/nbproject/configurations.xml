@@ -10,6 +10,7 @@
       <itemPath>EstadoIntro.h</itemPath>
       <itemPath>EstadoJuego.h</itemPath>
       <itemPath>EstadoJugando.h</itemPath>
+      <itemPath>EstadoMuerte.h</itemPath>
       <itemPath>EstadoPausa.h</itemPath>
       <itemPath>HUD.h</itemPath>
       <itemPath>Jugador.h</itemPath>
@@ -40,6 +41,7 @@
       <itemPath>Coordenada.cpp</itemPath>
       <itemPath>EstadoIntro.cpp</itemPath>
       <itemPath>EstadoJugando.cpp</itemPath>
+      <itemPath>EstadoMuerte.cpp</itemPath>
       <itemPath>EstadoPausa.cpp</itemPath>
       <itemPath>HUD.cpp</itemPath>
       <itemPath>Jugador.cpp</itemPath>
@@ -121,6 +123,10 @@
       <item path="EstadoJugando.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="EstadoJugando.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EstadoMuerte.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EstadoMuerte.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="EstadoPausa.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -240,6 +246,10 @@
       <item path="EstadoJugando.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="EstadoJugando.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EstadoMuerte.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EstadoMuerte.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="EstadoPausa.cpp" ex="false" tool="1" flavor2="0">
       </item>

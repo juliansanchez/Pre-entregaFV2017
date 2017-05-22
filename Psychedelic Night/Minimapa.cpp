@@ -65,7 +65,10 @@ void Minimapa::dibujar(){
                     rectan->setFillColor(sf::Color::White);
                 else
                     rectan->setFillColor(sf::Color(192,192,192));
-                rectan->setPosition(150*(j+1), 75*(i+1));
+                if (nivel->getNivel() == 1)
+                    rectan->setPosition(150*(j+1) - 150, 75*(i+1));
+                else
+                   rectan->setPosition(150*(j+1) - 150*(nivel->getNivel()-2), 75*(i+1)); 
                 vec->push_back(rectan);
                 motor2D->pintarRectShape(*rectan);
             }
@@ -88,7 +91,7 @@ void Minimapa::dibujartotal(){
         for (int j = 0; j<nivel->getNivel()+5; j++){
             if (m[i][j]!= 0 && m[i][j]!=3){
                 sf::RectangleShape* rectan = new sf::RectangleShape(sf::Vector2f(150, 75));
-                if (nivel->getX() == j && nivel->getY() == i)
+                if (nivel->getX() == i && nivel->getY() == j)
                     rectan->setFillColor(sf::Color::White);                
                 else if (m[i][j] == 1 || m[i][j] == 2)
                     rectan->setFillColor(sf::Color(192,192,192));
@@ -96,7 +99,10 @@ void Minimapa::dibujartotal(){
                     rectan->setFillColor(sf::Color::Red);
                 else if (m[i][j] == 5)
                     rectan->setFillColor(sf::Color::Yellow);
-                rectan->setPosition(150*(j+1), 75*(i+1));
+                if (nivel->getNivel() == 1)
+                    rectan->setPosition(150*(j+1) -150*nivel->getNivel(), 75*(i+1));
+                else
+                    rectan->setPosition(150*(j+1) -150*(nivel->getNivel()-2), 75*(i+1));
                 vec->push_back(rectan);
                 motor2D->pintarRectShape(*rectan);                 
             }

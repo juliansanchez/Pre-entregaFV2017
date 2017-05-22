@@ -34,10 +34,26 @@ Mapa::~Mapa() {
         delete[] _tilemap[l];
     }
     delete[] _tilemap;
+    for(int t=0; t<NHAB; t++){
+        for(int l=0; l<_numLayers; l++){
+            for(int y=0; y<_height; y++){
+                delete[] _tilemapSprite[t][l][y];
+                delete[] _tiles[t][l][y];
+            }
+            delete[] _tilemapSprite[t][l];
+            delete[] _tiles[t][l];
+        }
+        delete _tilemapSprite[t];
+        delete[] _tiles[t];
+    } 
+    delete[] _tilemapSprite;
+    delete[] _tiles;
+    delete[] _tilesetSprite;
+    delete[] _tilesetSpriteobj;       
 }
 
 void Mapa::leerMapa(int NH){
-
+    NHAB = NH;
     //creo el objeto xml
     TiXmlDocument doc;
     doc.LoadFile("muros.tmx");
@@ -47,9 +63,6 @@ void Mapa::leerMapa(int NH){
         std::cerr << "Error cargando las texturas";
         exit(0);
     }
-    
-    
-    
     if (!fuego.loadFromFile("resources/mierda.png")){
         std::cerr << "Error cargando las texturas";
         exit(0);
