@@ -271,8 +271,8 @@ void NPC::dibujarEnemigo(){
 }
 
 void NPC::posicionAleatoria(){
-    float px = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/350));
-    float py = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/180));
+    float px = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/340));
+    float py = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/170));
     float signox =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
     float signoy =  static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
     if (signox >= 0.5)
@@ -433,7 +433,6 @@ void NPC::posicionAnterior(){
     
     enemigo[0]->move(-posicion_anterior_x/6,-posicion_anterior_y/6);
     enemigo[1]->move(-posicion_anterior_x/6,-posicion_anterior_y/6);
-    cout<<posicion_anterior_x<<endl;
     
     }
 

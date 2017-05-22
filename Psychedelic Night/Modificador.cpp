@@ -108,7 +108,6 @@ void Modificador::pintar(){
 void Modificador::colisionObjeto(Jugador *j){     
     if(!colision && (j->getX()+ 32) > this->x && (j->getY()+ 42) > this->y &&
             (this->x +32)> j->getX() && (this->y+32) > j->getY()){
-        cout<<"Entro a colision"<<endl;
         colision=true;
 
         if(tipo == 1){

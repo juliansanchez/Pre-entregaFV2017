@@ -69,7 +69,7 @@ void EstadoMuerte::ManejarEventos(MotorJuego* juego){
 
 void EstadoMuerte::Actualizar(MotorJuego* juego){
     rec.setFillColor(sf::Color(0,0,0, 200/contador));
-    texto.setFillColor(sf::Color(255,255,255, 200/contador));
+    texto.setColor(sf::Color(255,255,255, 200/contador));
     if (contador>2*150/3){
         pj.setTextureRect(sf:: IntRect(18, 153, 27, 32));
     }
