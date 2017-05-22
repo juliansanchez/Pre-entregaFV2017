@@ -53,6 +53,6 @@ void Motor2D::pintarTexto(sf::Text texto){
 }
 
 void Motor2D::limpiarVentana(){
-    ventana->clear(sf::Color(0,127,127));
+    ventana->clear(sf::Color(0,0,0));
 }
 
