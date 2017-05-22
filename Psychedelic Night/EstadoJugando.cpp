@@ -108,24 +108,7 @@ void EstadoJugando::ManejarEventos(MotorJuego* juego){
                 }
             }
         }
-////        if(general->getEstado()){ //Movimiento vistas segun personaje
-////            if (personaje->getX()<niveles->getX()*39*20){
-////                //general->moverVista(-39*20, 0);
-////                //niveles->visitar(niveles->getX()-1, niveles->getY());
-////            }
-////            else if(personaje->getX()>(niveles->getX()+1)*39*20){
-////                general->moverVista(39*20, 0); 
-////                //niveles->visitar(niveles->getX()+1, niveles->getY());
-////            }        
-////            else if (personaje->getY()<niveles->getY()*23*20){
-////                general->moverVista(0, -23*20); 
-////                //niveles->visitar(niveles->getX(), niveles->getY()-1); 
-////            }
-////            else if (personaje->getY()>(niveles->getY()+1)*23*20){
-////                general->moverVista(0, 23*20); 
-////                //niveles->visitar(niveles->getX(), niveles->getY()+1); 
-////            }        
-//        }
+
     }
 }
 
@@ -152,21 +135,18 @@ void EstadoJugando::Actualizar(MotorJuego* juego){
         else {
             if(!niveles->enemigosVivos()){
             if(devol==2){
-                //cout<<niveles->getX()<<" "<<niveles->getY()<<endl;
                 general->moverVista(0, (-23*20));
                 y = y - 17*velocidad;
                 personaje->setY(y);
                 niveles->visitar(niveles->getX()-1,niveles->getY());
             }
             if(devol==3){
-                //cout<<niveles->getX()<<" "<<niveles->getY()<<endl;
                 general->moverVista(-39*20, 0);
                 x = x - 17*velocidad;
                 personaje->setX(x);
                 niveles->visitar(niveles->getX(),niveles->getY()-1); 
             }
             if(devol==4){
-                //cout<<niveles->getX()<<" "<<niveles->getY()<<endl;
                 general->moverVista(0, (23*20));
                 y = y + 17*velocidad;
                 personaje->setY(y); 
@@ -174,13 +154,11 @@ void EstadoJugando::Actualizar(MotorJuego* juego){
                 
             }
             if(devol==5){ 
-                //cout<<niveles->getX()<<" "<<niveles->getY()<<endl;
                 general->moverVista(39*20, 0);
                 x = x + 17*velocidad;
                 personaje->setX(x); 
                 niveles->visitar(niveles->getX(),niveles->getY()+1);
             }
-            cout << "holaaaaaaaaaaa" <<endl;
         }
         }
             

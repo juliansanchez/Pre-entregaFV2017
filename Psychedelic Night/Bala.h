@@ -15,7 +15,7 @@
 #define BALA_H
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include <math.h>
+#include <math.h>  
 
 using namespace sf;
 using namespace std;

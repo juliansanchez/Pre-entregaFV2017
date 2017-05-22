@@ -109,7 +109,6 @@ void Nivel::crearMapa(){
                 puer[1]=pl->CompruebaValor(i,j-1);
                 puer[2]=pl->CompruebaValor(i+1,j);
                 puer[3]=pl->CompruebaValor(i,j+1);
-                cout << puer[0] << puer[1] << puer[2] << puer[3] << endl;
                 mapa->setPosition(puer,c, j, i);
                 c++;
             }
@@ -312,7 +311,6 @@ void Nivel::colisionEntreNPC(){
                                 (vectorenemigos->at(j)->getY()+vectorenemigos->at(j)->getAltoSprite()) > (vectorenemigos->at(i)->getY())&&
                                 (vectorenemigos->at(i)->getX()+vectorenemigos->at(i)->getAnchoSprite())> (vectorenemigos->at(j)->getX()) &&
                                 (vectorenemigos->at(i)->getY()+vectorenemigos->at(i)->getAltoSprite())> (vectorenemigos->at(j)->getY())){
-                                cout<<"entro"<<endl;
                                 vectorenemigos->at(i)->posicionAnterior();
                                 
                             }                       
@@ -353,10 +351,8 @@ bool Nivel::colisionHabitacion(int x, int y) {
     x=(x%780)/20;
     y=(y%460)/20;
     if(y>18) y = 22;
-    //cout << x << y << endl;
     
     num = this->obtenerHab(posx,posy);
-    cout<<x<<" "<<y<<endl;
     if (this->mapa->_tiles[num][1][y][x] == 1){
             devol = true;
     }
@@ -386,12 +382,9 @@ bool **Nivel::getVisitadas(){
 }
 
 void Nivel::visitar(int i, int j){
-    cout<<"peddooooo"<<endl;
-    cout<<posx<<" "<<posy<<endl;
     visitadas[i][j] = true;
     setX(i);
     setY(j);
-    cout<<posx<<" "<<posy<<endl;
 }
 
 int Nivel::getX(){

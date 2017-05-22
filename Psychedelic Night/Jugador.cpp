@@ -217,7 +217,6 @@ void Jugador::disparar(){
             case Arriba:
                 cabeza->setTextureRect(sf::IntRect(5*tamSprite, 0*tamSprite, tamSprite, tamSprite));
                 // separacion entre bolas en el disparo
-                // cout<<"antes : "<<clock.getElapsedTime().asSeconds()<<endl;
                 if(clock.getElapsedTime().asSeconds() > velBala){ 
                     // creamos una nueva bala y la metemos en el vector
                     balas->push_back(new Bala(x,y-15,velx,-16,rangoDisparo));
@@ -292,7 +291,6 @@ int Jugador::getY(){
 
 bool Jugador:: ponerBomba(){
     if(numBombas > 0){
-        cout<<"Entro y no peta pero la bomba se debe crear en nivel"<<endl;
         numBombas--;  
         return true;
     }

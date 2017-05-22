@@ -167,26 +167,6 @@ void Mapa::leerMapa(int NH){
         }
     }
     
-    
-    
-    
-      
-    /*
-    
-    TiXmlElement* collision = map->FirstChildElement("objectgroup");
-    
-    TiXmlElement *objcollision = collision->FirstChildElement("object");
-    while(objcollision){
-       // _numObject++;
-        objcollision->QueryIntAttribute("width",&_widthCollider);
-        objcollision->QueryIntAttribute("height",&_heightCollider);
-        objcollision->QueryIntAttribute("x",&_xCollider);
-        objcollision->QueryIntAttribute("y",&_yCollider);
-        if(objcollision->QueryIntAttribute("rotation",&_rotCollider)==1){
-            _rotCollider=0;
-        }
-        objcollision= objcollision->NextSiblingElement("object");
-    }  */
 }
 
 void Mapa::setPosition(int puer[], int h, int ancho, int alto) {
@@ -197,6 +177,12 @@ void Mapa::setPosition(int puer[], int h, int ancho, int alto) {
     while(cont < 15){
         int x = 0 + rand()%(39-4);
         int y = 0 + rand()%(23-4);
+        if( x==18 || x ==19 || x==20 || x==21 ){
+            x = 16;
+        }
+        if( y==10 || y==11 || y==12 || y==13){
+            y=15;
+        }
         if(_tilemap[1][y][x] == 0){
             _tilemap[1][y][x] = 2 + rand()%(4-1);
             
